@@ -9559,18 +9559,12 @@ con N8N como hub central.</p>
 <li><strong>Activar W1 (SAP → PostgreSQL → Tookane)</strong>: crea y actualiza envíos desde SAP</li>
 <li><strong>Activar W4 y W5</strong>: alertas ETA proactivas e incidencias automáticas</li>
 <li><strong>Desplegar W6 (Email Agent + Asignación)</strong>:<ul>
-<li>Importar en N8N: <code>W6a_sub_buscar_patrones.json</code>, <code>W6b_sub_consultar_tecnico.json</code>, <code>W6_email_agent_asignacion.json</code></li>
 <li>Configurar credencial <strong>Gmail</strong> (OAuth2) y credencial <strong>Google Gemini</strong> (API Key)</li>
 <li>Actualizar los IDs de W6a y W6b en los nodos toolWorkflow de W6</li>
 <li>Activar W6 y enviar un email de prueba al buzón CO</li>
 </ul>
 </li>
 <li><strong>Activar W7 (Google Calendar)</strong>: conectar calendarios CO para disponibilidad diaria automática</li>
-<li><strong>Activar W8 (Notion → Procedimientos)</strong>:<ul>
-<li>Importar <code>W8_notion_procedimientos.json</code> en N8N</li>
-<li>Crear credencial <strong>Notion Internal Integration</strong> (Header Auth: <code>Authorization: Bearer {token}</code>)</li>
-<li>Ejecutar manualmente para el sync inicial (sincroniza los 11 procedimientos aprobados)</li>
-<li>Activar el workflow para que el schedule diario (07:00) mantenga la BD actualizada</li>
 </ul>
 </li>
 </ol>
