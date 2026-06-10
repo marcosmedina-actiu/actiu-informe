@@ -19,9 +19,9 @@
   --purple:  #6B21A8;
   --gray5:   #6B7280;
   --gray3:   #D1D5DB;
-  --gray1:   #fafafa;   /* Actiu section background */
+  --gray1:   #fafafa;
   --white:   #FFFFFF;
-  --text:    #333333;   /* Actiu body text */
+  --text:    #333333;
   --text2:   #555555;
   --border:  #E8E8E8;
   --radius:  10px;
@@ -38,7 +38,13 @@ body {
   font-size: 15px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
+
+/* ── STICKY FOOTER ───────────────────────────────────────────────── */
+.page-content { flex: 1; display: flex; flex-direction: column; }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -82,14 +88,6 @@ nav a.nav-link.active { color: white; border-bottom-color: var(--orange); }
 /* ── HERO ────────────────────────────────────────────────────────── */
 .hero { background: var(--black); color: white; padding: 44px 40px 38px; }
 .hero-inner { max-width: 900px; }
-.hero-label {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(201,108,30,.18);
-  border: 1px solid rgba(201,108,30,.35);
-  color: #F0A060;
-  font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
-  padding: 3px 10px; border-radius: 20px; margin-bottom: 14px;
-}
 .hero h1 {
   font-family: 'Instrument Serif', Georgia, serif;
   font-size: 2rem; font-weight: 400;
@@ -171,14 +169,14 @@ p.section-sub { color: var(--text2); font-size: .85rem; margin-bottom: 24px; }
 .nb-output { margin: 18px 0; }
 .nb-output img { max-width: 100%; display: block; margin: 0 auto; border-radius: 6px; box-shadow: var(--shadow); }
 
-/* notebook tables */
+/* notebook tables — default style (overridden per-page below) */
 .nb-output table, .nb-markdown table {
   border-collapse: collapse; font-size: .8rem;
   margin: 0 auto 14px; width: auto; max-width: 100%;
   border-radius: 6px; overflow: hidden; box-shadow: var(--shadow);
 }
 .nb-output table th, .nb-markdown table th {
-  background: var(--black) !important; color: white !important;
+  background: var(--orange) !important; color: white !important;
   padding: 8px 13px; text-align: left;
   font-weight: 700; font-size: .74rem; letter-spacing: .04em; white-space: nowrap;
 }
@@ -187,7 +185,7 @@ p.section-sub { color: var(--text2); font-size: .85rem; margin-bottom: 24px; }
   vertical-align: top; background: white;
 }
 .nb-output table tr:nth-child(even) td { background: var(--gray1); }
-.nb-output table tr:hover td { background: #FFF3E8; }
+.nb-output table tr:hover td { background: rgba(209,18,60,.05); }
 .nb-output pre {
   background: #F0EFED; border: 1px solid var(--border); border-radius: 6px;
   padding: 11px 14px; font-size: .78rem; color: #333; overflow-x: auto;
@@ -195,18 +193,22 @@ p.section-sub { color: var(--text2); font-size: .85rem; margin-bottom: 24px; }
 }
 
 /* ── DATA TABLE ──────────────────────────────────────────────────── */
-.table-scroll { overflow-x: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
+.table-scroll {
+  overflow-x: auto; border-radius: var(--radius);
+  box-shadow: var(--shadow); border: 1px solid var(--border);
+  overflow: hidden;
+}
 table.data-table { border-collapse: collapse; font-size: .79rem; width: 100%; min-width: 860px; background: white; }
 table.data-table thead th {
-  background: var(--black); color: white;
-  padding: 10px 13px; text-align: left;
+  background: var(--orange); color: white;
+  padding: 11px 14px; text-align: left;
   font-weight: 700; font-size: .71rem; letter-spacing: .05em; text-transform: uppercase;
   white-space: nowrap; position: sticky; top: 0; z-index: 1;
 }
 table.data-table thead th:first-child { position: sticky; top: 0; left: 0; z-index: 2; }
-table.data-table tbody td { padding: 7px 13px; border-bottom: 1px solid var(--border); vertical-align: top; }
+table.data-table tbody td { padding: 8px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
 table.data-table tbody tr:nth-child(even) td { background: var(--gray1); }
-table.data-table tbody tr:hover td { background: #FFF3E8; transition: background .1s; }
+table.data-table tbody tr:hover td { background: rgba(209,18,60,.05); transition: background .1s; }
 table.data-table tbody td:first-child { font-weight: 600; color: var(--black); }
 table.data-table code {
   font-family: 'Fira Code', 'SF Mono', Consolas, monospace;
@@ -241,6 +243,148 @@ table.data-table code {
 .step-title { font-weight: 700; font-size: .87rem; color: var(--black); margin-bottom: 3px; line-height: 1.3; }
 .step-desc  { font-size: .77rem; color: var(--text2); line-height: 1.45; }
 
+/* ═══════════════════════════════════════════════════════════════════
+   N8N STYLE — Arquitectura & Workflows page
+   ═══════════════════════════════════════════════════════════════════ */
+.n8n-content { background: #0F1117; flex: 1; }
+.n8n-content section {
+  background: #0F1117;
+  color: #C9D1D9;
+}
+.n8n-content section:nth-child(odd) { background: #141620; }
+
+.n8n-content h2.section-title {
+  color: #FF6D5A;
+  border-bottom-color: rgba(255,109,90,.3);
+}
+.n8n-content h2.section-title::before { background: #FF6D5A; }
+
+/* Workflow node cards — each h3 becomes a node header */
+.n8n-content .nb-markdown h3 {
+  background: #1C2030;
+  border: 1px solid #2A3050;
+  border-left: 4px solid #FF6D5A;
+  border-radius: 7px;
+  padding: 10px 15px;
+  color: #F0B8AF;
+  font-size: .87rem;
+  font-weight: 700;
+  margin: 20px 0 8px;
+  letter-spacing: .01em;
+}
+.n8n-content .nb-markdown h1,
+.n8n-content .nb-markdown h2 {
+  color: #CBD5E1;
+  border-bottom-color: rgba(255,255,255,.1);
+}
+.n8n-content .nb-markdown h4 { color: #94A3B8; font-weight: 600; }
+.n8n-content .nb-markdown p { color: #94A3B8; font-size: .9rem; }
+.n8n-content .nb-markdown ul,
+.n8n-content .nb-markdown ol { color: #94A3B8; font-size: .9rem; }
+.n8n-content .nb-markdown li { color: #94A3B8; margin-bottom: 4px; }
+.n8n-content .nb-markdown strong { color: #E2E8F0; font-weight: 700; }
+.n8n-content .nb-markdown em { color: #7DD3FC; font-style: normal; }
+.n8n-content .nb-markdown code {
+  background: rgba(125,211,252,.1);
+  color: #7DD3FC;
+  border: 1px solid rgba(125,211,252,.2);
+  font-size: .82em;
+}
+.n8n-content .nb-markdown blockquote {
+  border-left-color: #FF6D5A;
+  background: rgba(255,109,90,.08);
+  color: #FDBA74;
+}
+.n8n-content .nb-markdown hr { border-top-color: rgba(255,255,255,.08); }
+.n8n-content p.section-sub { color: #64748B; }
+
+/* Tables inside n8n sections */
+.n8n-content .nb-output table th,
+.n8n-content .nb-markdown table th {
+  background: #FF6D5A !important;
+  color: white !important;
+}
+.n8n-content .nb-output table td,
+.n8n-content .nb-markdown table td {
+  background: #1C2030 !important;
+  color: #CBD5E1;
+  border-bottom-color: rgba(255,255,255,.06);
+}
+.n8n-content .nb-output table tr:nth-child(even) td,
+.n8n-content .nb-markdown table tr:nth-child(even) td {
+  background: #252B3B !important;
+}
+.n8n-content .nb-output table tr:hover td,
+.n8n-content .nb-markdown table tr:hover td {
+  background: rgba(255,109,90,.1) !important;
+}
+.n8n-content .nb-output pre {
+  background: #1C2030;
+  border-color: rgba(255,255,255,.1);
+  color: #94A3B8;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   POSTGRESQL STYLE — Base de datos page
+   ═══════════════════════════════════════════════════════════════════ */
+.pg-content { flex: 1; }
+.pg-content section { background: var(--white); }
+.pg-content section:nth-child(odd) { background: #F0F7FF; }
+
+.pg-content h2.section-title {
+  color: #1A5276;
+  border-bottom-color: #336791;
+}
+.pg-content h2.section-title::before { background: #336791; }
+.pg-content p.section-sub { color: #5D6D7E; }
+
+/* Column/type badges — schema display */
+.pg-content .nb-markdown h3 {
+  color: #1A5276;
+  background: #EBF5FB;
+  border: 1px solid #AED6F1;
+  border-left: 4px solid #336791;
+  border-radius: 7px;
+  padding: 9px 14px;
+  font-size: .87rem;
+  margin: 20px 0 8px;
+}
+.pg-content .nb-markdown h4 { color: #336791; }
+.pg-content .nb-markdown strong { color: #1A5276; }
+.pg-content .nb-markdown code {
+  background: #EBF5FB;
+  color: #154360;
+  border: 1px solid #AED6F1;
+}
+.pg-content .nb-markdown blockquote {
+  border-left-color: #336791;
+  background: #EBF5FB;
+  color: #1A5276;
+}
+.pg-content .nb-markdown p { color: #2C3E50; }
+.pg-content .nb-markdown ul,
+.pg-content .nb-markdown ol { color: #2C3E50; }
+
+/* Tables in PG sections */
+.pg-content .nb-output table th,
+.pg-content .nb-markdown table th {
+  background: #336791 !important;
+  color: white !important;
+  font-size: .73rem; letter-spacing: .04em;
+}
+.pg-content .nb-output table td,
+.pg-content .nb-markdown table td {
+  background: white;
+  border-bottom-color: #D6EAF8;
+}
+.pg-content .nb-output table tr:nth-child(even) td { background: #F0F7FF !important; }
+.pg-content .nb-output table tr:hover td { background: #EBF5FB !important; }
+.pg-content .nb-output pre {
+  background: #F0F7FF;
+  border-color: #AED6F1;
+  color: #1A5276;
+}
+
 /* ── FOOTER ──────────────────────────────────────────────────────── */
 footer {
   background: var(--black); border-top: 2px solid var(--orange);
@@ -267,13 +411,14 @@ footer {
     <h1>Base de datos &mdash; PostgreSQL actiu_co</h1>
     <p>Esquema, tablas y relaciones del proyecto CO</p>
     <div class="hero-meta">
-      <span class="hero-chip">Actualizado: <strong>10/06/2026 12:52</strong></span>
+      <span class="hero-chip">Actualizado: <strong>10/06/2026 13:09</strong></span>
       <span class="hero-chip">PostgreSQL <strong>actiu_co</strong></span>
     </div>
   </div>
 </div>
 
-<section id="bd">
+<div class="page-content">
+<div class="pg-content"><section id="bd">
 <h2 class="section-title">4. Esquema PostgreSQL: tablas, fuentes y uso por workflow</h2>
 <div class="nb-markdown"><hr/>
 <p>Esta sección muestra el esquema completo de la base de datos <strong>actiu_co</strong>:
@@ -1066,7 +1211,8 @@ SELECT siguiente_tecnico_disponible();
 -- Desempate: random() -&gt; distribucion uniforme sin sesgos.</code>
 </div></div>
 </section>
-
+</div>
+</div>
 
 <footer>Customer Operations &middot; Actiu &mdash; Generado autom&aacute;ticamente desde PostgreSQL actiu_co</footer>
 
