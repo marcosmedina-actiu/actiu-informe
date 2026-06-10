@@ -169,14 +169,14 @@ p.section-sub { color: var(--text2); font-size: .85rem; margin-bottom: 24px; }
 .nb-output { margin: 18px 0; }
 .nb-output img { max-width: 100%; display: block; margin: 0 auto; border-radius: 6px; box-shadow: var(--shadow); }
 
-/* notebook tables — default style (overridden per-page below) */
+/* notebook tables */
 .nb-output table, .nb-markdown table {
   border-collapse: collapse; font-size: .8rem;
   margin: 0 auto 14px; width: auto; max-width: 100%;
   border-radius: 6px; overflow: hidden; box-shadow: var(--shadow);
 }
 .nb-output table th, .nb-markdown table th {
-  background: var(--orange) !important; color: white !important;
+  background: var(--black); color: white;
   padding: 8px 13px; text-align: left;
   font-weight: 700; font-size: .74rem; letter-spacing: .04em; white-space: nowrap;
 }
@@ -244,125 +244,154 @@ table.data-table code {
 .step-desc  { font-size: .77rem; color: var(--text2); line-height: 1.45; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   N8N STYLE — body.page-arquitectura
-   Especificidad (0,1,2) > section:nth-child(odd) (0,1,1)
+   ARQUITECTURA DIAGRAM
    ═══════════════════════════════════════════════════════════════════ */
-body.page-arquitectura { background: #0F1117; }
-body.page-arquitectura .page-content { background: #0F1117; }
-body.page-arquitectura section {
-  background: #0F1117;
-  color: #C9D1D9;
+.arch-diagram {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; padding: 32px 0 16px; flex-wrap: wrap;
+  overflow-x: auto;
 }
-body.page-arquitectura section:nth-child(even) { background: #141620; }
+.arch-col { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.arch-col-hub { gap: 0; }
 
-body.page-arquitectura h2.section-title {
-  color: #FF6D5A;
-  border-bottom-color: rgba(255,109,90,.3);
+.arch-node {
+  border-radius: 10px; padding: 14px 18px;
+  display: flex; flex-direction: column; align-items: center; gap: 7px;
+  min-width: 110px; text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.18);
+  position: relative;
 }
-body.page-arquitectura h2.section-title::before { background: #FF6D5A; }
-body.page-arquitectura p.section-sub { color: #64748B; }
+.arch-node-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+.arch-node-icon img { width: 36px; height: 36px; object-fit: contain; filter: brightness(0) invert(1); }
+.arch-node-name { font-weight: 800; font-size: .82rem; color: #fff; letter-spacing: .01em; line-height: 1.2; }
+.arch-node-detail { font-size: .68rem; color: rgba(255,255,255,.65); line-height: 1.3; }
 
-/* Workflow node cards — h3 como nodo n8n */
-body.page-arquitectura .nb-markdown h3 {
-  background: #1C2030;
-  border: 1px solid #2A3050;
-  border-left: 4px solid #FF6D5A;
-  border-radius: 7px;
-  padding: 10px 15px;
-  color: #F0B8AF;
-  font-size: .87rem;
-  font-weight: 700;
-  margin: 20px 0 8px;
-  letter-spacing: .01em;
-}
-body.page-arquitectura .nb-markdown h1,
-body.page-arquitectura .nb-markdown h2 {
-  color: #CBD5E1;
-  border-bottom-color: rgba(255,255,255,.1);
-}
-body.page-arquitectura .nb-markdown h4 { color: #94A3B8; }
-body.page-arquitectura .nb-markdown p  { color: #94A3B8; font-size: .9rem; }
-body.page-arquitectura .nb-markdown ul,
-body.page-arquitectura .nb-markdown ol { color: #94A3B8; }
-body.page-arquitectura .nb-markdown li { color: #94A3B8; margin-bottom: 4px; }
-body.page-arquitectura .nb-markdown strong { color: #E2E8F0; }
-body.page-arquitectura .nb-markdown em   { color: #7DD3FC; font-style: normal; }
-body.page-arquitectura .nb-markdown code {
-  background: rgba(125,211,252,.1);
-  color: #7DD3FC;
-  border: 1px solid rgba(125,211,252,.2);
-}
-body.page-arquitectura .nb-markdown blockquote {
-  border-left-color: #FF6D5A;
-  background: rgba(255,109,90,.08);
-  color: #FDBA74;
-}
-body.page-arquitectura .nb-markdown hr { border-top-color: rgba(255,255,255,.08); }
+.node-sap      { background: #0070F2; }
+.node-n8n      { background: #EA4B35; min-width: 130px; padding: 18px 22px; }
+.node-tookane  { background: #00897B; }
+.node-pg       { background: #336791; }
+.node-gmail    { background: #EA4335; }
+.node-sheets   { background: #34A853; }
+.node-gemini   { background: #4A90D9; }
+.node-calendar { background: #4285F4; }
 
-/* Tablas dentro de secciones n8n */
-body.page-arquitectura .nb-output table th,
-body.page-arquitectura .nb-markdown table th {
-  background: #FF6D5A !important; color: white !important;
+/* Connection arrows between columns */
+.arch-arrow {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; padding: 0 8px; flex-shrink: 0;
 }
-body.page-arquitectura .nb-output table td,
-body.page-arquitectura .nb-markdown table td {
-  background: #1C2030 !important; color: #CBD5E1;
-  border-bottom-color: rgba(255,255,255,.06);
+.arch-arrow-line {
+  width: 36px; height: 2px; background: var(--border); position: relative; flex-shrink: 0;
 }
-body.page-arquitectura .nb-output table tr:nth-child(even) td { background: #252B3B !important; }
-body.page-arquitectura .nb-output table tr:hover td { background: rgba(255,109,90,.1) !important; }
-body.page-arquitectura .nb-output pre {
-  background: #1C2030; border-color: rgba(255,255,255,.1); color: #94A3B8;
+.arch-arrow-line::after {
+  content: ''; position: absolute; right: -1px; top: -4px;
+  border-left: 7px solid var(--border); border-top: 5px solid transparent; border-bottom: 5px solid transparent;
+}
+
+/* Tookane custom icon (truck SVG) */
+.tookane-truck { font-size: 22px; line-height: 1; }
+
+/* N8N hub badge */
+.n8n-badge {
+  background: rgba(255,255,255,.15); border-radius: 20px;
+  padding: 2px 8px; font-size: .65rem; color: rgba(255,255,255,.8);
+  font-weight: 700; letter-spacing: .04em; margin-top: -2px;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   POSTGRESQL STYLE — body.page-bd
-   Especificidad (0,1,2) > section:nth-child(odd) (0,1,1)
+   WORKFLOW NODES (n8n style)
    ═══════════════════════════════════════════════════════════════════ */
-body.page-bd section { background: var(--white); }
-body.page-bd section:nth-child(even) { background: #F0F7FF; }
+.wf-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 10px;
+  margin-top: 16px;
+}
+.wf-node {
+  border-radius: 8px; overflow: hidden;
+  border: 1px solid var(--border); box-shadow: var(--shadow);
+  background: var(--white); transition: box-shadow .15s, transform .12s;
+}
+.wf-node:hover { box-shadow: 0 4px 14px rgba(0,0,0,.1); transform: translateY(-1px); }
+.wf-node-header {
+  padding: 9px 14px; display: flex; align-items: center; gap: 10px;
+}
+.wf-node-header img { width: 18px; height: 18px; filter: brightness(0) invert(1); flex-shrink: 0; }
+.wf-node-id {
+  background: rgba(255,255,255,.22); border-radius: 4px;
+  padding: 1px 6px; font-size: .65rem; font-weight: 800;
+  color: white; letter-spacing: .04em; flex-shrink: 0;
+}
+.wf-node-title { font-size: .82rem; font-weight: 700; color: white; flex: 1; line-height: 1.3; }
+.wf-node-status {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.wf-status-ok     { background: #4ADE80; }
+.wf-status-wait   { background: #FCD34D; }
+.wf-status-block  { background: #F87171; }
 
-body.page-bd h2.section-title {
-  color: #1A5276;
-  border-bottom-color: #336791;
+.wf-node-body { padding: 10px 14px 12px; }
+.wf-trigger {
+  font-size: .72rem; color: var(--text2); margin-bottom: 7px;
+  display: flex; align-items: flex-start; gap: 5px;
 }
-body.page-bd h2.section-title::before { background: #336791; }
-body.page-bd p.section-sub { color: #5D6D7E; }
+.wf-trigger-icon { font-size: .8rem; flex-shrink: 0; margin-top: 1px; }
+.wf-steps {
+  display: flex; flex-wrap: wrap; gap: 5px;
+}
+.wf-step {
+  background: var(--gray1); border: 1px solid var(--border);
+  border-radius: 5px; padding: 2px 8px;
+  font-size: .68rem; color: var(--text2); font-weight: 500;
+}
+.wf-step-arrow { color: var(--gray5); font-size: .7rem; align-self: center; }
+.wf-blocker {
+  margin-top: 7px; padding: 5px 9px;
+  background: #FEF2F2; border-radius: 5px; border-left: 3px solid #EF4444;
+  font-size: .69rem; color: #991B1B;
+}
 
-/* h3 como tabla/entidad PostgreSQL */
-body.page-bd .nb-markdown h3 {
-  color: #1A5276;
-  background: #EBF5FB;
-  border: 1px solid #AED6F1;
-  border-left: 4px solid #336791;
-  border-radius: 7px;
-  padding: 9px 14px;
-  font-size: .87rem;
-  margin: 20px 0 8px;
+/* ═══════════════════════════════════════════════════════════════════
+   POSTGRESQL SCHEMA DIAGRAM
+   ═══════════════════════════════════════════════════════════════════ */
+.pg-schema-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px;
+  margin-top: 16px;
 }
-body.page-bd .nb-markdown h4     { color: #336791; }
-body.page-bd .nb-markdown strong { color: #1A5276; }
-body.page-bd .nb-markdown code {
-  background: #EBF5FB; color: #154360; border: 1px solid #AED6F1;
+.pg-table-card {
+  border-radius: 8px; overflow: hidden;
+  border: 1px solid #C8D9EC; box-shadow: var(--shadow);
+  background: white; font-size: .75rem;
 }
-body.page-bd .nb-markdown blockquote {
-  border-left-color: #336791; background: #EBF5FB; color: #1A5276;
+.pg-table-header {
+  background: #336791; color: white;
+  padding: 8px 12px; display: flex; align-items: center; gap: 8px;
 }
-body.page-bd .nb-markdown p  { color: #2C3E50; }
-body.page-bd .nb-markdown ul,
-body.page-bd .nb-markdown ol { color: #2C3E50; }
-
-/* Tablas en secciones PG */
-body.page-bd .nb-output table th,
-body.page-bd .nb-markdown table th {
-  background: #336791 !important; color: white !important;
-  font-size: .73rem; letter-spacing: .04em;
+.pg-table-header img { width: 16px; height: 16px; filter: brightness(0) invert(1); flex-shrink: 0; }
+.pg-table-name { font-weight: 800; font-size: .82rem; flex: 1; letter-spacing: .01em; }
+.pg-row-count {
+  background: rgba(255,255,255,.18); border-radius: 10px;
+  padding: 1px 7px; font-size: .65rem; font-weight: 700; white-space: nowrap;
 }
-body.page-bd .nb-output table td { background: white; border-bottom-color: #D6EAF8; }
-body.page-bd .nb-output table tr:nth-child(even) td { background: #F0F7FF !important; }
-body.page-bd .nb-output table tr:hover td { background: #EBF5FB !important; }
-body.page-bd .nb-output pre {
-  background: #F0F7FF; border-color: #AED6F1; color: #1A5276;
+.pg-columns { padding: 6px 0; }
+.pg-col-row {
+  display: flex; align-items: center; gap: 6px;
+  padding: 3px 12px; border-bottom: 1px solid #EEF4FA;
+}
+.pg-col-row:last-child { border-bottom: none; }
+.pg-col-name { font-family: 'Fira Code', Consolas, monospace; font-size: .72rem; color: var(--black); flex: 1; }
+.pg-col-type { font-size: .65rem; color: #5D93C0; background: #EBF5FB; border-radius: 3px; padding: 1px 5px; white-space: nowrap; }
+.pg-col-pk   { font-size: .6rem; font-weight: 800; color: #D97706; background: #FEF3C7; border-radius: 3px; padding: 1px 5px; }
+.pg-col-fk   { font-size: .6rem; font-weight: 700; color: #7C3AED; background: #EDE9FE; border-radius: 3px; padding: 1px 5px; }
+.pg-col-null { font-size: .6rem; color: #9CA3AF; }
+.pg-fks-row {
+  padding: 5px 12px 7px; background: #F8FBFF;
+  border-top: 1px solid #C8D9EC;
+  font-size: .67rem; color: #4A6FA5;
+  display: flex; flex-wrap: wrap; gap: 4px; align-items: center;
+}
+.pg-fk-arrow { color: #A0B4C8; font-size: .7rem; }
+.pg-fk-tag {
+  background: #EDE9FE; color: #5B21B6; border-radius: 3px;
+  padding: 1px 5px; font-weight: 600;
 }
 
 /* ── FOOTER ──────────────────────────────────────────────────────── */
@@ -382,7 +411,7 @@ footer {
 }
 </style>
 </head>
-<body class="page-metricas">
+<body>
 
 <nav><a href="index.html" class="nav-brand"><span class="logo-dot"></span><span>Actiu CO</span></a><a href="index.html" class="nav-link active">M&eacute;tricas</a><a href="por-que-automatizar.html" class="nav-link">Por qu&eacute; automatizar</a><a href="arquitectura.html" class="nav-link">Arquitectura &amp; Workflows</a><a href="base-de-datos.html" class="nav-link">Base de datos</a><a href="resumen.html" class="nav-link">Resumen &amp; Pr&oacute;ximos pasos</a></nav>
 
@@ -391,7 +420,7 @@ footer {
     <h1>M&eacute;tricas operativas &mdash; CO Actiu</h1>
     <p>Datos en tiempo real desde PostgreSQL actiu_co</p>
     <div class="hero-meta">
-      <span class="hero-chip">Actualizado: <strong>10/06/2026 13:15</strong></span>
+      <span class="hero-chip">Actualizado: <strong>10/06/2026 13:25</strong></span>
       <span class="hero-chip">PostgreSQL <strong>actiu_co</strong></span>
     </div>
   </div>
