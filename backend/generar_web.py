@@ -33,15 +33,25 @@ SKIP_HEADINGS = {
     'próximos pasos',            # → reemplazado por sección estática en el template
 }
 
-NAVY  = '#1B2D4F'
-BLUE  = '#2563EB'
-TEAL  = '#0D9488'
-GREEN = '#16A34A'
-GOLD  = '#F59E0B'
-CORAL = '#EF4444'
-PURP  = '#7C3AED'
-ORNG  = '#EA580C'
-GRAY  = '#94A3B8'
+# Headings a suprimir del renderizado (contenido se mantiene, sólo se oculta el h2)
+SUPPRESS_HEADINGS = {
+    'sap s4',         # título del notebook — duplica el hero de la página
+}
+
+# Fragmentos de texto a eliminar del contenido extraído del notebook
+FILTER_PARAGRAPHS = [
+    'Eso es toda la integración con Tookane. El resto de workflows (alertas, casos CO, Google Sheets)',
+]
+
+NAVY  = '#1B1B1B'    # Actiu near-black
+BLUE  = '#C96C1E'    # Actiu warm orange (primary accent)
+TEAL  = '#2E7D6E'    # muted teal
+GREEN = '#2E7D32'
+GOLD  = '#8B6914'
+CORAL = '#C94040'
+PURP  = '#6B3FA0'
+ORNG  = '#C96C1E'    # same as BLUE = Actiu orange
+GRAY  = '#6B7280'
 
 # Normalización nombres transportistas en texto libre de casos.transportista
 CARRIER_ALIASES = {
@@ -339,6 +349,14 @@ def extract_notebook_sections(html_path):
                 continue
 
             inner = rendered.decode_contents().strip()
+            # Eliminar párrafos específicos señalados por el usuario
+            for phrase in FILTER_PARAGRAPHS:
+                if phrase in inner:
+                    # borrar el <p> completo que contiene la frase
+                    inner = re.sub(
+                        r'<p>[^<]*' + re.escape(phrase) + r'[^<]*</p>',
+                        '', inner, flags=re.DOTALL
+                    )
             if inner:
                 current['html_parts'].append(
                     f'<div class="nb-markdown">{inner}</div>'
@@ -445,8 +463,6 @@ def build_sap_table_rows(df):
 
 def build_notebook_html(sections):
     """Render extracted sections as HTML with section-title headings."""
-    # Alternate background: even sections have white background via CSS nth-child
-    # We use a wrapper that continues the section alternating pattern
     parts = []
     for sec in sections:
         if not sec['html_parts'] and not sec['heading']:
@@ -454,16 +470,18 @@ def build_notebook_html(sections):
         anchor = sec.get('anchor') or ''
         anchor_attr = f' id="{anchor}"' if anchor else ''
         body = '\n'.join(sec['html_parts'])
-        if sec['heading']:
+        heading = sec.get('heading') or ''
+        # Suprimir headings que duplican el hero u otros elementos de la página
+        suppress = any(s in heading.lower() for s in SUPPRESS_HEADINGS)
+        if heading and not suppress:
             parts.append(
                 f'<section{anchor_attr}>\n'
-                f'<h2 class="section-title">{sec["heading"]}</h2>\n'
+                f'<h2 class="section-title">{heading}</h2>\n'
                 f'{body}\n'
                 f'</section>\n'
             )
         else:
-            # No heading — append to previous or create anonymous section
-            parts.append(f'<section>\n{body}\n</section>\n')
+            parts.append(f'<section{anchor_attr}>\n{body}\n</section>\n')
 
     return '\n'.join(parts)
 
@@ -527,33 +545,9 @@ def build_kpi_cards(kpis):
     ])
 
 
-def build_charts(kpis):
-    parts     = []
-    b64_tipo  = chart_casos_tipo(kpis.get('casos_tipo', []))
-    b64_trans = chart_top_trans(kpis.get('top_trans', []))
-    b64_pais  = chart_pais_destino(kpis.get('pais_data', []))
-    if b64_tipo:
-        parts.append(
-            f'<div class="chart-box">'
-            f'<div class="chart-title">Casos por tipo</div>'
-            f'<img src="data:image/png;base64,{b64_tipo}" alt="Casos por tipo"/>'
-            f'</div>'
-        )
-    if b64_trans:
-        parts.append(
-            f'<div class="chart-box">'
-            f'<div class="chart-title">Top transportistas por casos</div>'
-            f'<img src="data:image/png;base64,{b64_trans}" alt="Top transportistas"/>'
-            f'</div>'
-        )
-    if b64_pais:
-        parts.append(
-            f'<div class="chart-box">'
-            f'<div class="chart-title">Casos por pa&iacute;s destino</div>'
-            f'<img src="data:image/png;base64,{b64_pais}" alt="Casos por país"/>'
-            f'</div>'
-        )
-    return ''.join(parts)
+def build_charts(_kpis):
+    # Charts eliminados por petición del usuario — sección vacía
+    return ''
 
 
 def build_next_steps():
