@@ -10,6 +10,7 @@ generar_web.py — backend del informe SAP<->Tookane
 import io
 import base64
 import re
+from collections import defaultdict
 from datetime import datetime
 
 import psycopg2
@@ -26,8 +27,11 @@ OUT           = r'C:\Users\medina\actiu-informe\index.html'
 NOTEBOOK_HTML = r'C:\Users\medina\n8n-build\analisis_sap_tookane.html'
 SAP_CSV       = r'C:\Users\medina\Downloads\CAMPOS PARA SUBIR A TOOKANE - Hoja 1.csv'
 
-# Notebook sections whose content is replaced by a dedicated section in the template
-SKIP_HEADINGS = {'estado de los 26 campos'}
+# Notebook sections cuyo contenido está cubierto por secciones dedicadas del template
+SKIP_HEADINGS = {
+    'estado de los 26 campos',   # → reemplazado por tabla CSV dedicada
+    'próximos pasos',            # → reemplazado por sección estática en el template
+}
 
 NAVY  = '#1B2D4F'
 BLUE  = '#2563EB'
@@ -39,15 +43,34 @@ PURP  = '#7C3AED'
 ORNG  = '#EA580C'
 GRAY  = '#94A3B8'
 
+# Normalización nombres transportistas en texto libre de casos.transportista
+CARRIER_ALIASES = {
+    'DACHSER': 'Dachser',
+    'DSV': 'DSV',
+    'KUEHNE & NAGEL': 'Kuehne+Nagel', 'KUEHNE+NAGEL': 'Kuehne+Nagel',
+    'KUEHNE-NAGEL': 'Kuehne+Nagel', 'KUEHNE NAGEL': 'Kuehne+Nagel',
+    'DB SCHENKER': 'DB Schenker', 'DB SCHENKER (COLISSIMO)': 'DB Schenker',
+    'GB GRUPAJES': 'GB Grupajes',
+    'ERCHIGA LOGISTICA': 'Erchiga', 'ERCHIGA': 'Erchiga',
+    'UPS FREIGHT': 'UPS',
+    'BERGÉ': 'Bergé', 'BERGÉ LOGISTICS': 'Bergé', 'BERGE LOGISTICS': 'Bergé',
+    'ARIN EXPRESS': 'Arin Express',
+    'LUIS TORTOSA': 'Luis Tortosa',
+    'GB TRANSP': 'GB Grupajes',
+}
+
 # Section anchor IDs for nav links (matched by keywords in heading text)
 SECTION_ANCHORS = {
-    'por qué':      'problema',
-    'no es óptima': 'problema',
-    'estado de los 26': 'brechas',
-    'propuesta de auto': 'arquitectura',
-    'detalle de cada': 'workflows',
-    'esquema postgresql': 'bd',
-    'resumen final': 'resumen',
+    'la integración entre': 'problema',  # "Por qué la integración entre SAP y Tookane no es óptima"
+    'no es óptima':         'problema',
+    'estado de los 26':     'brechas',
+    'propuesta de auto':    'arquitectura',
+    'arquitectura propuesta': 'arquitectura',
+    'hub central':          'arquitectura',  # "¿Por qué N8N como hub central?"
+    'qué resuelve':         'arquitectura',  # "2.2 ¿Qué resuelve esta arquitectura?"
+    'detalle de cada':      'workflows',
+    'esquema postgresql':   'bd',
+    'resumen final':        'resumen',
 }
 
 # ── NEXT STEPS (static) ───────────────────────────────────────────────────────
@@ -90,19 +113,27 @@ def get_kpis(conn):
         try:
             return _query(conn, sql, params)[0][0]
         except Exception:
+            try:
+                conn.rollback()
+            except Exception:
+                pass
             return fallback
 
     def safe_rows(sql, fallback=None):
         try:
             return _query(conn, sql)
         except Exception:
+            try:
+                conn.rollback()
+            except Exception:
+                pass
             return fallback or []
 
     kpis['casos_total']   = safe('SELECT count(*) FROM casos')
     kpis['envios_total']  = safe('SELECT count(*) FROM envios')
     kpis['transportistas']= safe('SELECT count(*) FROM transportistas', 26)
     kpis['trans_con_bp']  = safe(
-        "SELECT count(*) FROM transportistas WHERE bp_sap IS NOT NULL AND bp_sap <> ''", 20)
+        'SELECT count(*) FROM transportistas WHERE bp_sap IS NOT NULL', 20)
     kpis['contactos']     = safe('SELECT count(*) FROM transportistas_contactos')
     kpis['procedimientos']= safe('SELECT count(*) FROM procedimientos')
 
@@ -113,14 +144,55 @@ def get_kpis(conn):
             'WHERE tipo_caso IS NOT NULL GROUP BY tipo_caso ORDER BY n DESC'
         )
     ]
-    kpis['top_trans'] = [
+
+    # Top transportistas: usar texto libre (transportista_id es NULL en la mayoría)
+    raw_trans = safe_rows(
+        "SELECT UPPER(TRIM(transportista)), count(*) n FROM casos "
+        "WHERE transportista IS NOT NULL AND TRIM(transportista) NOT IN ('','-') "
+        "GROUP BY UPPER(TRIM(transportista)) ORDER BY n DESC"
+    )
+    counts_trans = defaultdict(int)
+    for raw, cnt in raw_trans:
+        norm = CARRIER_ALIASES.get(raw, raw.title() if raw else '—')
+        counts_trans[norm] += int(cnt)
+    kpis['top_trans'] = sorted(counts_trans.items(), key=lambda x: x[1], reverse=True)[:7]
+
+    # Distribución por país destino (normalizado vía subquery)
+    kpis['pais_data'] = [
         (r[0], int(r[1]))
-        for r in safe_rows(
-            'SELECT t.nombre, count(c.id) n '
-            'FROM casos c JOIN transportistas t ON c.transportista_id = t.id '
-            'GROUP BY t.nombre ORDER BY n DESC LIMIT 6'
-        )
+        for r in safe_rows("""
+            SELECT pais_norm, n FROM (
+              SELECT
+                CASE
+                  WHEN UPPER(TRIM(pais_destino)) IN ('ES','SPAIN','ESPAÑA','ESPANA') THEN 'España'
+                  WHEN UPPER(TRIM(pais_destino)) IN ('FR','FRANCE','FRANCIA') THEN 'Francia'
+                  WHEN UPPER(TRIM(pais_destino)) IN ('DE','GERMANY','ALEMANIA') THEN 'Alemania'
+                  WHEN UPPER(TRIM(pais_destino)) IN ('PT','PORTUGAL') THEN 'Portugal'
+                  WHEN UPPER(TRIM(pais_destino)) IN ('GB','UK','UNITED KINGDOM','REINO UNIDO') THEN 'Reino Unido'
+                  WHEN UPPER(TRIM(pais_destino)) IN ('IT','ITALY','ITALIA') THEN 'Italia'
+                  WHEN UPPER(TRIM(pais_destino)) IN ('CH','SWITZERLAND','SUIZA') THEN 'Suiza'
+                  WHEN UPPER(TRIM(pais_destino)) IN ('AD','ANDORRA') THEN 'Andorra'
+                  WHEN UPPER(TRIM(pais_destino)) IN ('BE','BELGIUM','BÉLGICA','BELGICA') THEN 'Bélgica'
+                  WHEN UPPER(TRIM(pais_destino)) IN ('NL','NETHERLANDS','PAÍSES BAJOS','PAISES BAJOS') THEN 'P.Bajos'
+                  WHEN UPPER(TRIM(pais_destino)) IN ('AT','AUSTRIA') THEN 'Austria'
+                  WHEN UPPER(TRIM(pais_destino)) IN ('IE','IRELAND','IRLANDA') THEN 'Irlanda'
+                  ELSE NULL
+                END as pais_norm, count(*) as n
+              FROM casos
+              WHERE pais_destino IS NOT NULL
+                AND UPPER(TRIM(pais_destino)) NOT IN ('','-')
+              GROUP BY pais_norm
+            ) sub
+            WHERE pais_norm IS NOT NULL
+            ORDER BY n DESC
+        """)
     ]
+    kpis['paises_count'] = len(kpis['pais_data'])
+    kpis['incidencias_total'] = safe(
+        "SELECT count(*) FROM casos WHERE inc_tipo IS NOT NULL")
+    kpis['clientes_total'] = safe(
+        "SELECT count(*) FROM clientes", 0)
+
     return kpis
 
 # ── CHARTS ───────────────────────────────────────────────────────────────────
@@ -163,7 +235,7 @@ def chart_top_trans(data):
         return None
     labels  = [d[0][:22] for d in data]
     values  = [d[1] for d in data]
-    palette = [TEAL, BLUE, GREEN, PURP, CORAL, ORNG]
+    palette = [TEAL, BLUE, GREEN, PURP, CORAL, ORNG, GOLD]
     colors  = [palette[i % len(palette)] for i in range(len(labels))]
     fig, ax = plt.subplots(figsize=(5.5, 3.2))
     bars = ax.barh(labels[::-1], values[::-1], color=colors[::-1],
@@ -177,6 +249,30 @@ def chart_top_trans(data):
     ax.set_axisbelow(True)
     for bar, val in zip(bars[::-1], values[::-1]):
         ax.text(val + 0.05, bar.get_y() + bar.get_height() / 2,
+                str(val), va='center', fontsize=8, fontweight='bold', color=NAVY)
+    fig.tight_layout()
+    return _to_b64(fig)
+
+
+def chart_pais_destino(data):
+    if not data:
+        return None
+    labels  = [d[0] for d in data]
+    values  = [d[1] for d in data]
+    palette = [BLUE, TEAL, PURP, CORAL, GOLD, GREEN, ORNG, '#14B8A6', '#F97316', '#8B5CF6']
+    colors  = [palette[i % len(palette)] for i in range(len(labels))]
+    fig, ax = plt.subplots(figsize=(5.5, 3.2))
+    bars = ax.barh(labels[::-1], values[::-1], color=colors[::-1],
+                   edgecolor='none', height=0.6)
+    ax.set_xlabel('Casos', fontsize=9, color='#64748B')
+    ax.tick_params(axis='y', labelsize=8)
+    ax.tick_params(axis='x', labelsize=8)
+    ax.xaxis.set_major_locator(mticker.MaxNLocator(integer=True))
+    ax.spines[['top', 'right', 'bottom']].set_visible(False)
+    ax.xaxis.grid(True, color='#F1F5F9', linewidth=0.8)
+    ax.set_axisbelow(True)
+    for bar, val in zip(bars[::-1], values[::-1]):
+        ax.text(val + 0.1, bar.get_y() + bar.get_height() / 2,
                 str(val), va='center', fontsize=8, fontweight='bold', color=NAVY)
     fig.tight_layout()
     return _to_b64(fig)
@@ -410,15 +506,24 @@ def _kpi_card(value, label, sub='', color=BLUE):
 def build_kpi_cards(kpis):
     trans       = kpis.get('transportistas', 26)
     trans_bp    = kpis.get('trans_con_bp', 20)
+    paises      = kpis.get('paises_count', 0)
+    incidencias = kpis.get('incidencias_total', 0)
+    clientes    = kpis.get('clientes_total', 0)
     return ''.join([
         _kpi_card(kpis.get('casos_total', 0),   'Total casos CO',           color=BLUE),
         _kpi_card(kpis.get('envios_total', 0),   'Envíos en BD',             color=TEAL),
         _kpi_card(f'{trans_bp}/{trans}',         'Transportistas con BP SAP',
                   f'{trans - trans_bp} sin BP SAP aún',                      CORAL),
+        _kpi_card(paises,                        'Países atendidos',
+                  'destinos con casos registrados',                          ORNG),
+        _kpi_card(incidencias,                   'Incidencias registradas',
+                  'casos con tipo de incidencia',                            GOLD),
+        _kpi_card(clientes,                      'Clientes en BD',
+                  'desde Base de Datos Notion CO',                           PURP),
         _kpi_card(kpis.get('contactos', 0),      'Contactos transportistas', color=GREEN),
         _kpi_card(kpis.get('procedimientos', 0), 'Procedimientos CO',
-                  'sincronizados desde Notion',                               PURP),
-        _kpi_card('8', 'Workflows N8N', 'importados · esperando credenciales', GOLD),
+                  'sincronizados desde Notion',                              TEAL),
+        _kpi_card('8', 'Workflows N8N', 'importados · esperando credenciales', GRAY),
     ])
 
 
@@ -426,6 +531,7 @@ def build_charts(kpis):
     parts     = []
     b64_tipo  = chart_casos_tipo(kpis.get('casos_tipo', []))
     b64_trans = chart_top_trans(kpis.get('top_trans', []))
+    b64_pais  = chart_pais_destino(kpis.get('pais_data', []))
     if b64_tipo:
         parts.append(
             f'<div class="chart-box">'
@@ -438,6 +544,13 @@ def build_charts(kpis):
             f'<div class="chart-box">'
             f'<div class="chart-title">Top transportistas por casos</div>'
             f'<img src="data:image/png;base64,{b64_trans}" alt="Top transportistas"/>'
+            f'</div>'
+        )
+    if b64_pais:
+        parts.append(
+            f'<div class="chart-box">'
+            f'<div class="chart-title">Casos por pa&iacute;s destino</div>'
+            f'<img src="data:image/png;base64,{b64_pais}" alt="Casos por país"/>'
             f'</div>'
         )
     return ''.join(parts)
