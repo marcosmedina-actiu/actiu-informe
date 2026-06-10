@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CO Actiu &mdash; SAP &harr; Tookane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+/* ── Variables ───────────────────────────────────────────────────── */
+:root {
+  --black:   #1B1B1B;
+  --orange:  #C96C1E;
+  --orange2: #E07820;
+  --teal:    #0F766E;
+  --red:     #B91C1C;
+  --amber:   #92400E;
+  --green:   #166534;
+  --purple:  #6B21A8;
+  --gray5:   #6B7280;
+  --gray3:   #D1D5DB;
+  --gray1:   #F3F3F1;
+  --white:   #FFFFFF;
+  --text:    #1F1F1F;
+  --text2:   #6B7280;
+  --border:  #E5E5E3;
+  --radius:  10px;
+  --shadow:  0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
+}
+
+/* ── Reset ───────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--gray1);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--gray3); border-radius: 3px; }
+
+/* ── NAV ─────────────────────────────────────────────────────────── */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--black);
+  padding: 0 28px;
+  display: flex; align-items: stretch; gap: 0;
+  flex-wrap: wrap;
+  border-bottom: 2px solid var(--orange);
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 8px;
+  padding: 14px 20px 14px 0; margin-right: 4px;
+  border-right: 1px solid rgba(255,255,255,.12);
+  white-space: nowrap;
+  text-decoration: none;
+}
+.nav-brand .logo-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--orange); flex-shrink: 0;
+}
+.nav-brand span { color: white; font-weight: 800; font-size: .9rem; letter-spacing: .03em; }
+nav a.nav-link {
+  color: rgba(255,255,255,.5);
+  text-decoration: none;
+  padding: 0 12px;
+  font-size: .78rem; font-weight: 500;
+  display: flex; align-items: center;
+  transition: color .12s, background .12s;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+nav a.nav-link:hover { color: white; background: rgba(255,255,255,.06); border-bottom-color: var(--orange); }
+nav a.nav-link.active { color: white; border-bottom-color: var(--orange); }
+
+/* ── HERO ────────────────────────────────────────────────────────── */
+.hero { background: var(--black); color: white; padding: 44px 40px 38px; }
+.hero-inner { max-width: 900px; }
+.hero-label {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(201,108,30,.18);
+  border: 1px solid rgba(201,108,30,.35);
+  color: #F0A060;
+  font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px; margin-bottom: 14px;
+}
+.hero h1 {
+  font-size: 1.75rem; font-weight: 900;
+  letter-spacing: -.025em; line-height: 1.2; margin-bottom: 9px;
+}
+.hero p { color: rgba(255,255,255,.5); font-size: .9rem; max-width: 580px; }
+.hero-meta { margin-top: 18px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.hero-chip { font-size: .72rem; color: rgba(255,255,255,.3); font-weight: 500; }
+.hero-chip strong { color: rgba(255,255,255,.5); }
+
+/* ── SECTION ─────────────────────────────────────────────────────── */
+section { padding: 48px 40px; background: var(--white); }
+section:nth-child(odd) { background: var(--gray1); }
+h2.section-title {
+  font-size: 1.1rem; font-weight: 800; color: var(--black);
+  letter-spacing: -.01em;
+  padding-bottom: 11px;
+  border-bottom: 2px solid var(--orange);
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 6px;
+}
+h2.section-title::before {
+  content: ''; display: inline-block;
+  width: 4px; height: 18px; background: var(--orange);
+  border-radius: 2px; flex-shrink: 0;
+}
+p.section-sub { color: var(--text2); font-size: .85rem; margin-bottom: 24px; }
+
+/* ── KPI GRID ────────────────────────────────────────────────────── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.kpi-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 18px 18px 16px;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--orange);
+  box-shadow: var(--shadow);
+  transition: transform .12s, box-shadow .12s;
+}
+.kpi-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.09); }
+.kpi-card .kpi-value {
+  font-size: 2.4rem; font-weight: 900;
+  color: var(--black); line-height: 1; letter-spacing: -.02em;
+}
+.kpi-card .kpi-label {
+  font-size: .67rem; color: var(--text2);
+  font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  margin-top: 6px;
+}
+.kpi-card .kpi-sub { font-size: .73rem; color: var(--teal); margin-top: 5px; font-weight: 500; line-height: 1.3; }
+
+/* ── NOTEBOOK CONTENT ────────────────────────────────────────────── */
+.nb-markdown h1, .nb-markdown h2 {
+  font-size: 1.05rem; font-weight: 800; color: var(--black);
+  margin: 28px 0 7px; padding-bottom: 5px;
+  border-bottom: 1px solid var(--border);
+}
+.nb-markdown h3 { font-size: .95rem; font-weight: 700; color: #222; margin: 20px 0 4px; }
+.nb-markdown h4 { font-size: .87rem; font-weight: 600; color: #444; margin: 14px 0 3px; }
+.nb-markdown p { color: #333; margin: 0 0 10px; font-size: .91rem; }
+.nb-markdown ul, .nb-markdown ol { padding-left: 20px; margin: 0 0 10px; color: #333; font-size: .91rem; }
+.nb-markdown li { margin-bottom: 3px; }
+.nb-markdown strong { color: var(--black); font-weight: 700; }
+.nb-markdown em { color: #555; }
+.nb-markdown code {
+  background: #F0EFED; padding: 1px 5px; border-radius: 3px;
+  font-family: 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-size: .83em; color: var(--black);
+}
+.nb-markdown blockquote {
+  border-left: 3px solid var(--orange); margin: 12px 0; padding: 9px 14px;
+  background: #FEF5EC; color: #7A3A0A; border-radius: 0 4px 4px 0; font-size: .9rem;
+}
+.nb-markdown hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+.nb-output { margin: 18px 0; }
+.nb-output img { max-width: 100%; display: block; margin: 0 auto; border-radius: 6px; box-shadow: var(--shadow); }
+
+/* notebook tables */
+.nb-output table, .nb-markdown table {
+  border-collapse: collapse; font-size: .8rem;
+  margin: 0 auto 14px; width: auto; max-width: 100%;
+  border-radius: 6px; overflow: hidden; box-shadow: var(--shadow);
+}
+.nb-output table th, .nb-markdown table th {
+  background: var(--black) !important; color: white !important;
+  padding: 8px 13px; text-align: left;
+  font-weight: 700; font-size: .74rem; letter-spacing: .04em; white-space: nowrap;
+}
+.nb-output table td, .nb-markdown table td {
+  padding: 7px 13px; border-bottom: 1px solid var(--border);
+  vertical-align: top; background: white;
+}
+.nb-output table tr:nth-child(even) td { background: var(--gray1); }
+.nb-output table tr:hover td { background: #FFF3E8; }
+.nb-output pre {
+  background: #F0EFED; border: 1px solid var(--border); border-radius: 6px;
+  padding: 11px 14px; font-size: .78rem; color: #333; overflow-x: auto;
+  font-family: 'Fira Code', 'SF Mono', Consolas, monospace;
+}
+
+/* ── DATA TABLE (26 campos SAP / transportistas) ─────────────────── */
+.table-scroll { overflow-x: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
+table.data-table { border-collapse: collapse; font-size: .79rem; width: 100%; min-width: 860px; background: white; }
+table.data-table thead th {
+  background: var(--black); color: white;
+  padding: 10px 13px; text-align: left;
+  font-weight: 700; font-size: .71rem; letter-spacing: .05em; text-transform: uppercase;
+  white-space: nowrap; position: sticky; top: 0; z-index: 1;
+}
+table.data-table thead th:first-child { position: sticky; top: 0; left: 0; z-index: 2; }
+table.data-table tbody td { padding: 7px 13px; border-bottom: 1px solid var(--border); vertical-align: top; }
+table.data-table tbody tr:nth-child(even) td { background: var(--gray1); }
+table.data-table tbody tr:hover td { background: #FFF3E8; transition: background .1s; }
+table.data-table tbody td:first-child { font-weight: 600; color: var(--black); }
+table.data-table code {
+  font-family: 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-size: .8em; color: var(--black); background: #F0EFED; padding: 1px 4px; border-radius: 3px;
+}
+
+/* ── BADGES ──────────────────────────────────────────────────────── */
+.badge { display: inline-block; border-radius: 4px; padding: 2px 7px; font-size: .68rem; font-weight: 700; white-space: nowrap; letter-spacing: .02em; }
+.badge-ok      { background: #DCFCE7; color: #14532D; }
+.badge-extra   { background: #FEF9C3; color: #713F12; }
+.badge-parcial { background: #FEF3C7; color: #92400E; }
+.badge-no      { background: #FEE2E2; color: #7F1D1D; }
+.badge-si      { background: #DCFCE7; color: #14532D; }
+.badge-eval    { background: #EDE9FE; color: #4C1D95; }
+.badge-posible { background: #FEF3C7; color: #92400E; }
+.badge-yaesta  { background: #DBEAFE; color: #1E3A8A; }
+
+/* ── STEPS (proximos pasos) ──────────────────────────────────────── */
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.step-item {
+  background: var(--white); border-radius: var(--radius);
+  padding: 15px 17px; display: flex; align-items: flex-start; gap: 12px;
+  border: 1px solid var(--border); box-shadow: var(--shadow);
+  transition: border-color .15s, transform .12s;
+}
+.step-item:hover { border-color: var(--orange); transform: translateY(-1px); }
+.step-num {
+  min-width: 27px; height: 27px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: .78rem; color: white; flex-shrink: 0;
+}
+.step-title { font-weight: 700; font-size: .87rem; color: var(--black); margin-bottom: 3px; line-height: 1.3; }
+.step-desc  { font-size: .77rem; color: var(--text2); line-height: 1.45; }
+
+/* ── FOOTER ──────────────────────────────────────────────────────── */
+footer {
+  background: var(--black); border-top: 2px solid var(--orange);
+  color: rgba(255,255,255,.3); text-align: center;
+  padding: 18px; font-size: .74rem; letter-spacing: .02em;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .hero { padding: 30px 18px 26px; }
+  section { padding: 32px 18px; }
+  nav { padding: 0 14px; }
+  .hero h1 { font-size: 1.35rem; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav><a href="index.html" class="nav-brand"><span class="logo-dot"></span><span>Actiu CO</span></a><a href="index.html" class="nav-link">M&eacute;tricas</a><a href="por-que-automatizar.html" class="nav-link">Por qu&eacute; automatizar</a><a href="arquitectura.html" class="nav-link">Arquitectura &amp; Workflows</a><a href="base-de-datos.html" class="nav-link active">Base de datos</a><a href="resumen.html" class="nav-link">Resumen &amp; Pr&oacute;ximos pasos</a></nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Customer Operations &middot; Actiu</div>
+    <h1>Base de datos &mdash; PostgreSQL actiu_co</h1>
+    <p>Esquema, tablas y relaciones del proyecto CO</p>
+    <div class="hero-meta">
+      <span class="hero-chip">Actualizado: <strong>10/06/2026 12:29</strong></span>
+      <span class="hero-chip">PostgreSQL <strong>actiu_co</strong></span>
+    </div>
+  </div>
+</div>
+
+<section id="bd">
+<h2 class="section-title">4. Esquema PostgreSQL: tablas, fuentes y uso por workflow</h2>
+<div class="nb-markdown"><hr/>
+<p>Esta sección muestra el esquema completo de la base de datos <strong>actiu_co</strong>:
+de dónde se alimenta cada tabla, cómo se conectan entre sí y qué workflow de N8N
+lee o escribe en cada una.</p>
+<p>Los conteos son actuales a junio 2026 (datos reales en la BD local).</p></div>
+<div class="nb-output"><div style="background:#1B2D4F;border-radius:14px;padding:36px 44px;margin-bottom:28px;font-family:sans-serif;">
+<div style="color:#93C5FD;font-size:.8rem;font-weight:700;text-transform:uppercase;
+              letter-spacing:.12em;margin-bottom:8px;">Seccion 5 · PostgreSQL actiu_co</div>
+<h2 style="color:white;font-size:1.75rem;font-weight:900;margin:0 0 10px;">
+    Esquema completo de tablas
+  </h2>
+<div style="color:#CBD5E1;font-size:.9rem;margin:0;display:flex;gap:24px;flex-wrap:wrap;">
+<span>19 tablas</span><span style="opacity:.4">|</span>
+<span>3 vistas</span><span style="opacity:.4">|</span>
+<span>2 funciones SQL</span><span style="opacity:.4">|</span>
+<span>Datos en tiempo real</span>
+</div>
+</div>
+<div style="margin-bottom:24px;font-family:sans-serif;">
+<div style="background:#0D9488;border-radius:10px 10px 0 0;padding:10px 20px;
+                  display:flex;align-items:center;gap:10px;">
+<span style="color:white;font-weight:800;font-size:.95rem;">Nucleo logistico</span>
+<span style="color:rgba(255,255,255,.55);font-size:.8rem;">
+          2 tablas
+        </span>
+</div>
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-top:none;
+                  border-radius:0 0 10px 10px;padding:14px;
+                  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;">
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">📦</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">envios</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              4,067 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">Expedición completa: estado Tookane, ETA, carrier, tracking y datos SAP. Tabla central de la capa logística.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">W1 · Webhooks Tookane (tiempo real)</span><span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">W1b · SAP OData VTTK (creación de envío)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">casos.envio_id →</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">webhook_log.envio_id →</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">alertas_eta.envio_id →</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ transportistas (transportista_id)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#1B2D4F;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W1</span><span style="display:inline-block;background:#0D9488;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W2</span><span style="display:inline-block;background:#EA580C;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W3</span><span style="display:inline-block;background:#F59E0B;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W4</span>
+</div>
+</div>
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">📈</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">eta_seguimiento</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              2,963 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">Snapshot diario de expediciones pendientes agrupadas por carrier. Cada fila puede vincularse al envío concreto que generó el seguimiento.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">W4 · calculado desde envios (diario 7:00)</span><span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">W3 · sync Google Sheets</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ envios (envio_id)</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ transportistas (transportista_id)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#EA580C;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W3</span><span style="display:inline-block;background:#F59E0B;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W4</span>
+</div>
+</div>
+</div>
+</div>
+<div style="margin-bottom:24px;font-family:sans-serif;">
+<div style="background:#2563EB;border-radius:10px 10px 0 0;padding:10px 20px;
+                  display:flex;align-items:center;gap:10px;">
+<span style="color:white;font-weight:800;font-size:.95rem;">Atencion CO</span>
+<span style="color:rgba(255,255,255,.55);font-size:.8rem;">
+          3 tablas
+        </span>
+</div>
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-top:none;
+                  border-radius:0 0 10px 10px;padding:14px;
+                  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;">
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">📋</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">casos</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              307 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">Caso CO: tipo, carril, prioridad, técnico asignado, estado. Vincula correo, envío, transportista y procedimiento en un único registro.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">Gmail · W6 Email Agent</span><span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">W5 incidencia Tookane</span><span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">CSV historico</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">co_messages.caso_id →</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">notificaciones.caso_id →</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">borradores_respuesta.caso_id →</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">memoria_agente.caso_id →</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">feedback_tecnico.caso_id →</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ transportistas (transportista_id)</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ envios (envio_id)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#EF4444;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W5</span><span style="display:inline-block;background:#7C3AED;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W6</span>
+</div>
+</div>
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">✉️</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">co_messages</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              636 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">Mensaje individual de cada hilo. procesado_por_ia=true indica que W3 ya lo analizó y evita reprocesarlo. transportista_id propagado desde el caso padre.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">Gmail · W6 Email Agent</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ casos (caso_id)</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ transportistas (transportista_id)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#7C3AED;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W6</span>
+</div>
+</div>
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">✍️</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">borradores_respuesta</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              0 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">Borrador generado por la IA. Registra modelo usado, confianza, si el técnico lo revisó y qué cambió antes de enviar.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">W6 · Claude AI</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ casos (caso_id)</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">&lt;- casos (borrador_id)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#7C3AED;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W6</span>
+</div>
+</div>
+</div>
+</div>
+<div style="margin-bottom:24px;font-family:sans-serif;">
+<div style="background:#1B2D4F;border-radius:10px 10px 0 0;padding:10px 20px;
+                  display:flex;align-items:center;gap:10px;">
+<span style="color:white;font-weight:800;font-size:.95rem;">Personas</span>
+<span style="color:rgba(255,255,255,.55);font-size:.8rem;">
+          3 tablas
+        </span>
+</div>
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-top:none;
+                  border-radius:0 0 10px 10px;padding:14px;
+                  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;">
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">👤</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">tecnicos</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              4 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">4 técnicos CO activos. La función siguiente_tecnico_disponible() devuelve el de menor carga con desempate aleatorio.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">Manual</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">casos.tecnico_id →</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">notificaciones.tecnico_id →</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">disponibilidad_tecnicos.tecnico_id →</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">feedback_tecnico.tecnico_id →</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">metricas_mensuales.tecnico_id →</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#7C3AED;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W6</span>
+</div>
+</div>
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">📨</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">notificaciones</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              0 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">Aviso enviado al técnico por asignación o incidencia. Registra canal, timestamp de envío y si fue leído.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">W6 asignacion de caso</span><span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">W5 incidencia Tookane</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ casos</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ tecnicos</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#EF4444;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W5</span><span style="display:inline-block;background:#7C3AED;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W6</span>
+</div>
+</div>
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">📅</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">disponibilidad_tecnicos</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              4 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">Calendario de disponibilidad y horas por técnico. W7 lo actualiza cada mañana desde Google Calendar; W6 lo consulta antes de asignar.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">W7 · Google Calendar (diario 06:30)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ tecnicos</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#7C3AED;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W6</span><span style="display:inline-block;background:#16A34A;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W7</span>
+</div>
+</div>
+</div>
+</div>
+<div style="margin-bottom:24px;font-family:sans-serif;">
+<div style="background:#16A34A;border-radius:10px 10px 0 0;padding:10px 20px;
+                  display:flex;align-items:center;gap:10px;">
+<span style="color:white;font-weight:800;font-size:.95rem;">Maestros</span>
+<span style="color:rgba(255,255,255,.55);font-size:.8rem;">
+          2 tablas
+        </span>
+</div>
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-top:none;
+                  border-radius:0 0 10px 10px;padding:14px;
+                  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;">
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">🚚</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">transportistas</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              26 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">26 carriers activos. Incluye BP SAP (20/26), dominio email para matching automático, y puntero al contacto operativo principal (FASE 1). Fuente de verdad de la identidad de cada carrier.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">Manual · Notion BD Transportistas</span><span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">update_bp_sap.sql (BP SAP desde Notion 09/06/2026)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">contacto_principal_id → transportistas_contactos</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">&lt;- casos · envios · eta_seguimiento · patrones_aprendizaje · alertas_eta · webhook_log · co_messages</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="color:#94A3B8;font-size:.75rem;">datos maestros · sin workflow asignado</span>
+</div>
+</div>
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">👥</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">transportistas_contactos</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              55 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">55 contactos únicos de 26 carriers. Cada contacto incluye persona, email, teléfono, fase operativa (1=postventa/seguimiento, 3=comercial) y URL Notion. Base de los datos en accion_sugerida de casos Tookane.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">Notion BD - Transportistas (importación manual 09/06/2026)</span><span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">K+N: Marian Candel (añadido por compañera)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ transportistas (transportista_id)</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">&lt;- transportistas (contacto_principal_id)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="color:#94A3B8;font-size:.75rem;">datos maestros · sin workflow asignado</span>
+</div>
+</div>
+</div>
+</div>
+<div style="margin-bottom:24px;font-family:sans-serif;">
+<div style="background:#EF4444;border-radius:10px 10px 0 0;padding:10px 20px;
+                  display:flex;align-items:center;gap:10px;">
+<span style="color:white;font-weight:800;font-size:.95rem;">Integraciones N8N</span>
+<span style="color:rgba(255,255,255,.55);font-size:.8rem;">
+          4 tablas
+        </span>
+</div>
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-top:none;
+                  border-radius:0 0 10px 10px;padding:14px;
+                  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;">
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">🔔</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">webhook_log</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              0 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">Registro de todos los eventos entrantes de Tookane. procesado=false permite reprocesar en caso de fallo.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">Tookane webhooks (tiempo real)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ envios (envio_id)</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ transportistas (transportista_id)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#0D9488;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W2</span><span style="display:inline-block;background:#EF4444;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W5</span>
+</div>
+</div>
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">🔁</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">sap_sync_log</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              0 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">Log de cada envío SAP → Tookane con payload, resultado HTTP y número de reintentos.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">W1 · SAP eventos VTTK</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ envios (envio_id)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#1B2D4F;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W1</span>
+</div>
+</div>
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">⏰</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">alertas_eta</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              3,504 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">Una alerta por envío por día: la constraint UNIQUE(envio_id, fecha, tipo) impide duplicados automáticamente.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">W4 · cada manana a las 7:00</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ envios (envio_id)</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ transportistas (transportista_id)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#F59E0B;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W4</span>
+</div>
+</div>
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">📊</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">sheets_sync_log</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              0 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">Historial de cada escritura a Google Sheets: filas escritas, duración en ms y errores si los hay.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">W3 · cada hora</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ envios (envio_id)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#EA580C;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W3</span>
+</div>
+</div>
+</div>
+</div>
+<div style="margin-bottom:24px;font-family:sans-serif;">
+<div style="background:#7C3AED;border-radius:10px 10px 0 0;padding:10px 20px;
+                  display:flex;align-items:center;gap:10px;">
+<span style="color:white;font-weight:800;font-size:.95rem;">IA y Aprendizaje</span>
+<span style="color:rgba(255,255,255,.55);font-size:.8rem;">
+          3 tablas
+        </span>
+</div>
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-top:none;
+                  border-radius:0 0 10px 10px;padding:14px;
+                  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;">
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">💭</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">memoria_agente</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              0 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">Predicciones de W6 con el resultado real anotado. Permite medir la precisión del agente por tipo de caso.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">W6 · Claude AI (cada correo procesado)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ casos</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ patrones_aprendizaje</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#7C3AED;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W6</span>
+</div>
+</div>
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">🧠</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">patrones_aprendizaje</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              52 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">Patrones dominio+tipo_caso confirmados por frecuencia. W6 los usa para clasificar con mayor confianza. transportista_id permite filtrar por carrier.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">Auto-calculado desde casos (veces_confirmado)</span><span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">CSV Tookane (8 patrones iniciales 09/06/2026)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">&lt;- memoria_agente (patron_id)</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ transportistas (transportista_id)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#7C3AED;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W6</span>
+</div>
+</div>
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">✅</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">feedback_tecnico</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              0 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">Correcciones del técnico sobre predicciones IA. Alimenta el reentrenamiento de patrones.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">Manual · técnico CO en interfaz</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ casos</span><span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ tecnicos</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#7C3AED;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W6</span>
+</div>
+</div>
+</div>
+</div>
+<div style="margin-bottom:24px;font-family:sans-serif;">
+<div style="background:#64748B;border-radius:10px 10px 0 0;padding:10px 20px;
+                  display:flex;align-items:center;gap:10px;">
+<span style="color:white;font-weight:800;font-size:.95rem;">Referencia</span>
+<span style="color:rgba(255,255,255,.55);font-size:.8rem;">
+          2 tablas
+        </span>
+</div>
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-top:none;
+                  border-radius:0 0 10px 10px;padding:14px;
+                  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;">
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">📖</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">procedimientos</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              8 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">SOPs y procedimientos CO sincronizados desde Notion. Incluye prioridad, SLA, palabras clave y tipo de remitente. W8 los actualiza automáticamente al detectar cambios en Notion.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">W8 · Notion Trigger (event-driven, ~10 min)</span><span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">Manual inicial</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">&lt;- casos (procedimiento_id)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#EF4444;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W5</span><span style="display:inline-block;background:#7C3AED;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W6</span><span style="display:inline-block;background:#2563EB;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W8</span>
+</div>
+</div>
+<div style="background:white;border:1px solid #E2E8F0;border-radius:10px;
+                    padding:16px 18px;display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:1.25rem;">📉</span>
+<code style="font-weight:800;font-size:.95rem;color:#0F172A;">metricas_mensuales</code>
+</div>
+<div style="background:#F1F5F9;border-radius:6px;padding:2px 10px;
+                        font-size:.78rem;font-weight:700;color:#475569;white-space:nowrap;">
+              48 filas
+            </div>
+</div>
+<div style="color:#475569;font-size:.83rem;line-height:1.55;">KPIs mensuales por técnico y tipo de caso. Fuente para el dashboard de dirección.</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Fuente de datos
+            </div>
+<span style="display:inline-block;background:#F1F5F9;color:#374151;border:1px solid #CBD5E1;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">Auto-calculado desde casos (recalculo mensual)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Relaciones FK
+            </div>
+<span style="display:inline-block;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:4px;padding:1px 7px;font-size:.72rem;margin:1px;">→ tecnicos (tecnico_id)</span>
+</div>
+<div>
+<div style="font-size:.68rem;font-weight:700;color:#94A3B8;
+                        text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">
+              Workflow N8N
+            </div>
+<span style="display:inline-block;background:#EA580C;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W3</span>
+</div>
+</div>
+</div>
+</div>
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;
+            padding:16px 20px;font-family:sans-serif;margin-top:4px;">
+<div style="font-size:.72rem;font-weight:700;color:#64748B;text-transform:uppercase;
+              letter-spacing:.08em;margin-bottom:10px;">Leyenda de workflows N8N</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;"><div style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;background:#1B2D4F;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W1</span><span style="font-size:.8rem;color:#475569;">SAP → PostgreSQL → Tookane</span></div><div style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;background:#0D9488;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W2</span><span style="font-size:.8rem;color:#475569;">Tookane → PostgreSQL (tiempo real)</span></div><div style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;background:#EA580C;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W3</span><span style="font-size:.8rem;color:#475569;">Google Sheets automatico</span></div><div style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;background:#F59E0B;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W4</span><span style="font-size:.8rem;color:#475569;">Alerta ETA proactiva 7:00</span></div><div style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;background:#EF4444;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W5</span><span style="font-size:.8rem;color:#475569;">Incidencia → Caso CO auto</span></div><div style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;background:#7C3AED;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W6</span><span style="font-size:.8rem;color:#475569;">CO Email Agent + Asignacion</span></div><div style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;background:#16A34A;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W7</span><span style="font-size:.8rem;color:#475569;">Google Calendar → Disponibilidad</span></div><div style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;background:#2563EB;color:white;border-radius:4px;padding:1px 8px;font-size:.7rem;font-weight:700;margin:1px;">W8</span><span style="font-size:.8rem;color:#475569;">Notion → Procedimientos CO</span></div></div>
+</div>
+<div style="background:#EDE9FE;border:1px solid #C4B5FD;border-radius:10px;
+            padding:16px 20px;font-family:sans-serif;margin-top:16px;">
+<div style="font-size:.72rem;font-weight:700;color:#7C3AED;text-transform:uppercase;
+              letter-spacing:.08em;margin-bottom:8px;">Funcion SQL · W2 Asignacion</div>
+<code style="font-size:.82rem;color:#3B0764;background:#F5F3FF;border-radius:6px;
+               padding:10px 14px;display:block;line-height:1.6;white-space:pre;">
+SELECT siguiente_tecnico_disponible();
+-- Devuelve tecnico_id con menos casos abiertos.
+-- Desempate: random() -&gt; distribucion uniforme sin sesgos.</code>
+</div></div>
+</section>
+
+
+<footer>Customer Operations &middot; Actiu &mdash; Generado autom&aacute;ticamente desde PostgreSQL actiu_co</footer>
+
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CO Actiu &mdash; SAP &harr; Tookane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+/* ── Variables ───────────────────────────────────────────────────── */
+:root {
+  --black:   #1B1B1B;
+  --orange:  #C96C1E;
+  --orange2: #E07820;
+  --teal:    #0F766E;
+  --red:     #B91C1C;
+  --amber:   #92400E;
+  --green:   #166534;
+  --purple:  #6B21A8;
+  --gray5:   #6B7280;
+  --gray3:   #D1D5DB;
+  --gray1:   #F3F3F1;
+  --white:   #FFFFFF;
+  --text:    #1F1F1F;
+  --text2:   #6B7280;
+  --border:  #E5E5E3;
+  --radius:  10px;
+  --shadow:  0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
+}
+
+/* ── Reset ───────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--gray1);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--gray3); border-radius: 3px; }
+
+/* ── NAV ─────────────────────────────────────────────────────────── */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--black);
+  padding: 0 28px;
+  display: flex; align-items: stretch; gap: 0;
+  flex-wrap: wrap;
+  border-bottom: 2px solid var(--orange);
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 8px;
+  padding: 14px 20px 14px 0; margin-right: 4px;
+  border-right: 1px solid rgba(255,255,255,.12);
+  white-space: nowrap;
+  text-decoration: none;
+}
+.nav-brand .logo-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--orange); flex-shrink: 0;
+}
+.nav-brand span { color: white; font-weight: 800; font-size: .9rem; letter-spacing: .03em; }
+nav a.nav-link {
+  color: rgba(255,255,255,.5);
+  text-decoration: none;
+  padding: 0 12px;
+  font-size: .78rem; font-weight: 500;
+  display: flex; align-items: center;
+  transition: color .12s, background .12s;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+nav a.nav-link:hover { color: white; background: rgba(255,255,255,.06); border-bottom-color: var(--orange); }
+nav a.nav-link.active { color: white; border-bottom-color: var(--orange); }
+
+/* ── HERO ────────────────────────────────────────────────────────── */
+.hero { background: var(--black); color: white; padding: 44px 40px 38px; }
+.hero-inner { max-width: 900px; }
+.hero-label {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(201,108,30,.18);
+  border: 1px solid rgba(201,108,30,.35);
+  color: #F0A060;
+  font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px; margin-bottom: 14px;
+}
+.hero h1 {
+  font-size: 1.75rem; font-weight: 900;
+  letter-spacing: -.025em; line-height: 1.2; margin-bottom: 9px;
+}
+.hero p { color: rgba(255,255,255,.5); font-size: .9rem; max-width: 580px; }
+.hero-meta { margin-top: 18px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.hero-chip { font-size: .72rem; color: rgba(255,255,255,.3); font-weight: 500; }
+.hero-chip strong { color: rgba(255,255,255,.5); }
+
+/* ── SECTION ─────────────────────────────────────────────────────── */
+section { padding: 48px 40px; background: var(--white); }
+section:nth-child(odd) { background: var(--gray1); }
+h2.section-title {
+  font-size: 1.1rem; font-weight: 800; color: var(--black);
+  letter-spacing: -.01em;
+  padding-bottom: 11px;
+  border-bottom: 2px solid var(--orange);
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 6px;
+}
+h2.section-title::before {
+  content: ''; display: inline-block;
+  width: 4px; height: 18px; background: var(--orange);
+  border-radius: 2px; flex-shrink: 0;
+}
+p.section-sub { color: var(--text2); font-size: .85rem; margin-bottom: 24px; }
+
+/* ── KPI GRID ────────────────────────────────────────────────────── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.kpi-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 18px 18px 16px;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--orange);
+  box-shadow: var(--shadow);
+  transition: transform .12s, box-shadow .12s;
+}
+.kpi-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.09); }
+.kpi-card .kpi-value {
+  font-size: 2.4rem; font-weight: 900;
+  color: var(--black); line-height: 1; letter-spacing: -.02em;
+}
+.kpi-card .kpi-label {
+  font-size: .67rem; color: var(--text2);
+  font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  margin-top: 6px;
+}
+.kpi-card .kpi-sub { font-size: .73rem; color: var(--teal); margin-top: 5px; font-weight: 500; line-height: 1.3; }
+
+/* ── NOTEBOOK CONTENT ────────────────────────────────────────────── */
+.nb-markdown h1, .nb-markdown h2 {
+  font-size: 1.05rem; font-weight: 800; color: var(--black);
+  margin: 28px 0 7px; padding-bottom: 5px;
+  border-bottom: 1px solid var(--border);
+}
+.nb-markdown h3 { font-size: .95rem; font-weight: 700; color: #222; margin: 20px 0 4px; }
+.nb-markdown h4 { font-size: .87rem; font-weight: 600; color: #444; margin: 14px 0 3px; }
+.nb-markdown p { color: #333; margin: 0 0 10px; font-size: .91rem; }
+.nb-markdown ul, .nb-markdown ol { padding-left: 20px; margin: 0 0 10px; color: #333; font-size: .91rem; }
+.nb-markdown li { margin-bottom: 3px; }
+.nb-markdown strong { color: var(--black); font-weight: 700; }
+.nb-markdown em { color: #555; }
+.nb-markdown code {
+  background: #F0EFED; padding: 1px 5px; border-radius: 3px;
+  font-family: 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-size: .83em; color: var(--black);
+}
+.nb-markdown blockquote {
+  border-left: 3px solid var(--orange); margin: 12px 0; padding: 9px 14px;
+  background: #FEF5EC; color: #7A3A0A; border-radius: 0 4px 4px 0; font-size: .9rem;
+}
+.nb-markdown hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+.nb-output { margin: 18px 0; }
+.nb-output img { max-width: 100%; display: block; margin: 0 auto; border-radius: 6px; box-shadow: var(--shadow); }
+
+/* notebook tables */
+.nb-output table, .nb-markdown table {
+  border-collapse: collapse; font-size: .8rem;
+  margin: 0 auto 14px; width: auto; max-width: 100%;
+  border-radius: 6px; overflow: hidden; box-shadow: var(--shadow);
+}
+.nb-output table th, .nb-markdown table th {
+  background: var(--black) !important; color: white !important;
+  padding: 8px 13px; text-align: left;
+  font-weight: 700; font-size: .74rem; letter-spacing: .04em; white-space: nowrap;
+}
+.nb-output table td, .nb-markdown table td {
+  padding: 7px 13px; border-bottom: 1px solid var(--border);
+  vertical-align: top; background: white;
+}
+.nb-output table tr:nth-child(even) td { background: var(--gray1); }
+.nb-output table tr:hover td { background: #FFF3E8; }
+.nb-output pre {
+  background: #F0EFED; border: 1px solid var(--border); border-radius: 6px;
+  padding: 11px 14px; font-size: .78rem; color: #333; overflow-x: auto;
+  font-family: 'Fira Code', 'SF Mono', Consolas, monospace;
+}
+
+/* ── DATA TABLE (26 campos SAP / transportistas) ─────────────────── */
+.table-scroll { overflow-x: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
+table.data-table { border-collapse: collapse; font-size: .79rem; width: 100%; min-width: 860px; background: white; }
+table.data-table thead th {
+  background: var(--black); color: white;
+  padding: 10px 13px; text-align: left;
+  font-weight: 700; font-size: .71rem; letter-spacing: .05em; text-transform: uppercase;
+  white-space: nowrap; position: sticky; top: 0; z-index: 1;
+}
+table.data-table thead th:first-child { position: sticky; top: 0; left: 0; z-index: 2; }
+table.data-table tbody td { padding: 7px 13px; border-bottom: 1px solid var(--border); vertical-align: top; }
+table.data-table tbody tr:nth-child(even) td { background: var(--gray1); }
+table.data-table tbody tr:hover td { background: #FFF3E8; transition: background .1s; }
+table.data-table tbody td:first-child { font-weight: 600; color: var(--black); }
+table.data-table code {
+  font-family: 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-size: .8em; color: var(--black); background: #F0EFED; padding: 1px 4px; border-radius: 3px;
+}
+
+/* ── BADGES ──────────────────────────────────────────────────────── */
+.badge { display: inline-block; border-radius: 4px; padding: 2px 7px; font-size: .68rem; font-weight: 700; white-space: nowrap; letter-spacing: .02em; }
+.badge-ok      { background: #DCFCE7; color: #14532D; }
+.badge-extra   { background: #FEF9C3; color: #713F12; }
+.badge-parcial { background: #FEF3C7; color: #92400E; }
+.badge-no      { background: #FEE2E2; color: #7F1D1D; }
+.badge-si      { background: #DCFCE7; color: #14532D; }
+.badge-eval    { background: #EDE9FE; color: #4C1D95; }
+.badge-posible { background: #FEF3C7; color: #92400E; }
+.badge-yaesta  { background: #DBEAFE; color: #1E3A8A; }
+
+/* ── STEPS (proximos pasos) ──────────────────────────────────────── */
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.step-item {
+  background: var(--white); border-radius: var(--radius);
+  padding: 15px 17px; display: flex; align-items: flex-start; gap: 12px;
+  border: 1px solid var(--border); box-shadow: var(--shadow);
+  transition: border-color .15s, transform .12s;
+}
+.step-item:hover { border-color: var(--orange); transform: translateY(-1px); }
+.step-num {
+  min-width: 27px; height: 27px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: .78rem; color: white; flex-shrink: 0;
+}
+.step-title { font-weight: 700; font-size: .87rem; color: var(--black); margin-bottom: 3px; line-height: 1.3; }
+.step-desc  { font-size: .77rem; color: var(--text2); line-height: 1.45; }
+
+/* ── FOOTER ──────────────────────────────────────────────────────── */
+footer {
+  background: var(--black); border-top: 2px solid var(--orange);
+  color: rgba(255,255,255,.3); text-align: center;
+  padding: 18px; font-size: .74rem; letter-spacing: .02em;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .hero { padding: 30px 18px 26px; }
+  section { padding: 32px 18px; }
+  nav { padding: 0 14px; }
+  .hero h1 { font-size: 1.35rem; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav><a href="index.html" class="nav-brand"><span class="logo-dot"></span><span>Actiu CO</span></a><a href="index.html" class="nav-link">M&eacute;tricas</a><a href="por-que-automatizar.html" class="nav-link active">Por qu&eacute; automatizar</a><a href="arquitectura.html" class="nav-link">Arquitectura &amp; Workflows</a><a href="base-de-datos.html" class="nav-link">Base de datos</a><a href="resumen.html" class="nav-link">Resumen &amp; Pr&oacute;ximos pasos</a></nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Customer Operations &middot; Actiu</div>
+    <h1>Por qu&eacute; automatizar SAP &harr; Tookane</h1>
+    <p>An&aacute;lisis de brechas y los 26 campos de integraci&oacute;n</p>
+    <div class="hero-meta">
+      <span class="hero-chip">Actualizado: <strong>10/06/2026 12:29</strong></span>
+      <span class="hero-chip">PostgreSQL <strong>actiu_co</strong></span>
+    </div>
+  </div>
+</div>
+
+<section id="problema">
+<h2 class="section-title">Por qué la integración entre SAP y Tookane no es óptima</h2>
+<div class="nb-markdown"><hr/>
+<p>La conexión existe, pero tiene cuatro problemas concretos que generan trabajo manual y pérdida de visibilidad:</p>
+<p><strong>1. Los datos llegan, pero sin estructura aprovechable</strong>
+La mayoría de los campos de SAP llegan a Tookane dentro de un contenedor genérico llamado <code>extraInfo</code>. Tookane los recibe como texto libre y no puede usarlos para automatizar decisiones: asignar carrier, gestionar plazos o disparar alertas según el tipo de envío.</p>
+<p><strong>2. Los datos de pedido no llegan a la capa logística</strong>
+De las 4.009 expediciones registradas, ninguna tiene número de pedido SAP, código de cliente ni importe vinculado. SAP gestiona los pedidos en la tabla VBAK y esa información nunca se transfiere a Tookane ni a la base logística. Si hay una incidencia, hay que buscar el pedido a mano en el ERP.</p>
+<p><strong>3. Sincronización manual y tardía</strong>
+El estado de cada entrega se actualiza cuando alguien descarga el CSV de Tookane manualmente, normalmente 1-2 veces por semana. Los sistemas internos siempre van con varios días de retraso respecto a la realidad del transporte.</p>
+<p><strong>4. Expediciones sin trazabilidad cruzada</strong>
+584 expediciones existen en Tookane pero no tienen enlace verificado a SAP. No hay campo común que vincule de forma fiable el pedido SAP con su expedición en Tookane, lo que hace imposible la reconciliación automática.</p></div>
+</section>
+<section id="brechas">
+<h2 class="section-title">Brechas SAP &rarr; Tookane &mdash; 26 campos</h2>
+<p class="section-sub">Campos que SAP debe comunicar a Tookane. Los marcados como <strong>EXTRAINFO</strong> llegan al TMS pero no son accionables autom&aacute;ticamente.</p>
+<div class="table-scroll"><table class="data-table">
+<thead><tr><th>Campo SAP</th><th>Tabla.Campo t&eacute;cnico</th><th>Estado en Tookane</th><th>&iquest;Notificar trans.?</th><th>&iquest;D&oacute;nde aparece?</th><th>Uso en Actiu</th><th>&iquest;Lo subimos?</th></tr></thead>
+<tbody><tr><td><strong>Itin. transporte</strong></td><td><code>VTTK.ROUTE</code></td><td><span class="badge badge-extra">NO -> EXTRAINFO</span></td><td style="text-align:center;font-size:.78rem">NO</td><td style="font-size:.78rem">LISTADO PRINCIPAL DE TOOKANE</td><td style="font-size:.78rem;max-width:260px">Nos indica la ruta que realizará el transporte. Las rutas, ahora mismo están obsoletas en el momento que ampliemos este campo, nos dará información útil</td><td><span class="badge badge-si">sí</span></td></tr>
+<tr><td><strong>Cl. exped.</strong></td><td><code>VTTK.VSART</code></td><td><span class="badge badge-extra">NO -> EXTRAINFO</span></td><td style="text-align:center;font-size:.78rem">NO</td><td style="font-size:.78rem">LISTADO PRINCIPAL DE TOOKANE</td><td style="font-size:.78rem;max-width:260px">Usamos este campo para indicar el tipo de camión</td><td><span class="badge badge-si">sí</span></td></tr>
+<tr><td><strong>Cl. med. transpo.</strong></td><td><code>VTTK.BFART</code></td><td></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Indicamos el tipo de carga, si es carga, bultos sueltos, expedición colectiva o urgente</td><td><span class="badge badge-posible">posible</span></td></tr>
+<tr><td><strong>Matric. Vehic</strong></td><td><code>VTTK.SIGNI</code></td><td><span class="badge badge-extra">NO -> EXTRAINFO</span></td><td style="text-align:center;font-size:.78rem">NO</td><td style="font-size:.78rem">LISTADO PRINCIPAL DE TOOKANE</td><td style="font-size:.78rem;max-width:260px">Campo donde indicar la matrícula del vehículo</td><td><span class="badge badge-si">sí</span></td></tr>
+<tr><td><strong>PesTotPerm</strong></td><td><code>VTTK.ALLOWED_TWGT</code></td><td></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Peso total permitido del transporte</td><td><span class="badge badge-no">no</span></td></tr>
+<tr><td><strong>Pl. itinerarios</strong></td><td><code>VTTK.AULWE</code></td><td></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Se puede usar para plafinicar los itinerarios qué hacer cada semana, horas a las de entregar.</td><td><span class="badge badge-posible">posible</span></td></tr>
+<tr><td><strong>Condic. exped.</strong></td><td><code>VTTK.VSBED</code></td><td><span class="badge badge-extra">NO -> EXTRAINFO</span></td><td style="text-align:center;font-size:.78rem">NO</td><td style="font-size:.78rem">LISTADO PRINCIPAL DE TOOKANE</td><td style="font-size:.78rem;max-width:260px">Condición de expedición al cliente, es decir cómo el transportista llega hasta el cliente, si vía directa o por plataforma</td><td><span class="badge badge-yaesta">ya está subido</span></td></tr>
+<tr><td><strong>Matric. Remol.</strong></td><td><code>VTTK.EXTI1</code></td><td></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Nº de matrícula para el remolque</td><td><span class="badge badge-posible">posible</span></td></tr>
+<tr><td><strong>Gest especial</strong></td><td></td><td></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Indicar la urgencia</td><td><span class="badge badge-posible">posible</span></td></tr>
+<tr><td><strong>Func. interl. (WZ)</strong></td><td><code>SDPARTNERLIST.PARVW</code></td><td><span style="font-size:.78rem">Dirección de transportista o dirección de plataforma (WZ)</span></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Función de Interlocutor indicado desde el pedido (Transportista, Plataforma, Dirección de plataforma)</td><td><span class="badge badge-si">sí</span></td></tr>
+<tr><td><strong>Interl.</strong></td><td><code>SDPARTNERLIST.PARTNER_EXT</code></td><td><span style="font-size:.78rem">Dirección de transportista o dirección de plataforma (WZ)</span></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Interlocutor indicado desde el pedido. Nº de BP</td><td><span class="badge badge-si">sí</span></td></tr>
+<tr><td><strong>Txt</strong></td><td></td><td></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Orden transportista</td><td><span class="badge badge-posible">posible</span></td></tr>
+<tr><td><strong>Tipo Envío</strong></td><td><code>VTTK.ADD03</code></td><td><span class="badge badge-extra">NO -> EXTRAINFO</span></td><td style="text-align:center;font-size:.78rem">SI, TOOKANE LO TENDRA EN CUENTA EN LOS SERVICIOS</td><td style="font-size:.78rem">LISTADO PRINCIPAL DE TOOKANE</td><td style="font-size:.78rem;max-width:260px">Marca el tipo de envío (estándard, rápido y con fecha concreta)</td><td><span class="badge badge-si">sí</span></td></tr>
+<tr><td><strong>Fecha concreta</strong></td><td><code>VTTK.TEXT2</code></td><td><span style="font-size:.78rem">NO -> agreedDeliveryDateFrom y el campo agreedDeliveryDateTo  Type: String (ISO Date)</span></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Marca la fecha y hora en la que se tiene que realizar el tipo de envío de fecha concreta</td><td><span class="badge badge-si">sí</span></td></tr>
+<tr><td><strong>Sin Etiq Bulto</strong></td><td><code>VTTK.ADD01</code></td><td></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Marcaremos esta opción cuando desde planificación de transporte esa mercancía tiene que ir a granel, es decir, sin etiqueta bulto</td><td><span class="badge badge-posible">posible</span></td></tr>
+<tr><td><strong>Prepar. clte.</strong></td><td><code>VTTK.ADD02</code></td><td></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Indica si la expedición debe ir agrupada por cliente</td><td><span class="badge badge-posible">posible</span></td></tr>
+<tr><td><strong>Orient. Cab.</strong></td><td><code>VTTK.ADD04</code></td><td></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Indica la orientación del caballete</td><td><span class="badge badge-posible">posible</span></td></tr>
+<tr><td><strong>Comentarios</strong></td><td><code>ADDR1_DATA.REMARK</code></td><td><span style="font-size:.78rem">consumer.notes</span></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Comentarios referente a la dirección dentro del BP</td><td><span class="badge badge-si">sí</span></td></tr>
+<tr><td><strong>Referencia cliente</strong></td><td><code>VBKD.BSTKD</code></td><td><span class="badge badge-extra">NO -> EXTRAINFO</span></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Datos extra que indican en el pedido.</td><td><span class="badge badge-si">sí</span></td></tr>
+<tr><td><strong>Función de interlocutor (M1)</strong></td><td><code>SDPARTNERLIST.PARVW</code></td><td><span class="badge badge-extra">NO -> EXTRAINFO</span></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">NUEVA BANDEJA PARA FILTRAR POR MONTADORES = M1</td><td style="font-size:.78rem;max-width:260px">Función de Interlocutor indicado desde el pedido (Transportista, Plataforma, Dirección de plataforma). Si está activado el M1, que lo muestre</td><td><span class="badge badge-si">sí</span></td></tr>
+<tr><td><strong>Clase de pedido</strong></td><td><code>VBAK.AUART</code></td><td><span class="badge badge-extra">NO -> EXTRAINFO</span></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Indica el tipo de pedido si es un pedido normal, de consigna o de devolución</td><td><span class="badge badge-si">sí</span></td></tr>
+<tr><td><strong>Causa de la incidencia</strong></td><td><code>VIQMEL.QMGRP</code></td><td><span class="badge badge-extra">NO -> EXTRAINFO</span></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Información de la incidencia/aviso</td><td><span class="badge badge-si">sí</span></td></tr>
+<tr><td><strong>Causa 2 de la incidencia</strong></td><td><code>VIQMEL.QMCOD</code></td><td><span class="badge badge-extra">NO -> EXTRAINFO</span></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Información de la incidencia/aviso</td><td><span class="badge badge-si">sí</span></td></tr>
+<tr><td><strong>Clase de aviso</strong></td><td><code>VIQMEL.QMARTE</code></td><td><span class="badge badge-extra">NO -> EXTRAINFO</span></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">Tipo de incidencia por ejemplo si es rotura</td><td><span class="badge badge-si">sí</span></td></tr>
+<tr><td><strong>HU Expedición</strong></td><td><code>V51VE.EXIDV</code></td><td><span class="badge badge-extra">NO -> EXTRAINFO</span></td><td style="text-align:center;font-size:.78rem">&mdash;</td><td style="font-size:.78rem">&mdash;</td><td style="font-size:.78rem;max-width:260px">HU asignada a la expedición</td><td><span class="badge badge-si">sí</span></td></tr></tbody>
+</table></div>
+</section>
+
+
+<footer>Customer Operations &middot; Actiu &mdash; Generado autom&aacute;ticamente desde PostgreSQL actiu_co</footer>
+
+</body>
+</html>
