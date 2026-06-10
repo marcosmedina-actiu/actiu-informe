@@ -6,13 +6,12 @@
 <title>CO Actiu &mdash; SAP &harr; Tookane</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-<style>
-/* ── Variables ───────────────────────────────────────────────────── */
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>/* ── Variables — Actiu brand (actiu.com/es) ──────────────────────── */
 :root {
   --black:   #1B1B1B;
-  --orange:  #C96C1E;
-  --orange2: #E07820;
+  --orange:  #D1123C;   /* primary: Actiu deep red */
+  --orange2: #B01035;   /* hover: darker red */
   --teal:    #0F766E;
   --red:     #B91C1C;
   --amber:   #92400E;
@@ -20,11 +19,11 @@
   --purple:  #6B21A8;
   --gray5:   #6B7280;
   --gray3:   #D1D5DB;
-  --gray1:   #F3F3F1;
+  --gray1:   #fafafa;   /* Actiu section background */
   --white:   #FFFFFF;
-  --text:    #1F1F1F;
-  --text2:   #6B7280;
-  --border:  #E5E5E3;
+  --text:    #333333;   /* Actiu body text */
+  --text2:   #555555;
+  --border:  #E8E8E8;
   --radius:  10px;
   --shadow:  0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
 }
@@ -33,7 +32,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: 'Inter', -apple-system, sans-serif;
+  font-family: 'Manrope', -apple-system, sans-serif;
   background: var(--gray1);
   color: var(--text);
   font-size: 15px;
@@ -92,8 +91,9 @@ nav a.nav-link.active { color: white; border-bottom-color: var(--orange); }
   padding: 3px 10px; border-radius: 20px; margin-bottom: 14px;
 }
 .hero h1 {
-  font-size: 1.75rem; font-weight: 900;
-  letter-spacing: -.025em; line-height: 1.2; margin-bottom: 9px;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 2rem; font-weight: 400;
+  letter-spacing: -.01em; line-height: 1.2; margin-bottom: 9px;
 }
 .hero p { color: rgba(255,255,255,.5); font-size: .9rem; max-width: 580px; }
 .hero-meta { margin-top: 18px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
@@ -194,7 +194,7 @@ p.section-sub { color: var(--text2); font-size: .85rem; margin-bottom: 24px; }
   font-family: 'Fira Code', 'SF Mono', Consolas, monospace;
 }
 
-/* ── DATA TABLE (26 campos SAP / transportistas) ─────────────────── */
+/* ── DATA TABLE ──────────────────────────────────────────────────── */
 .table-scroll { overflow-x: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
 table.data-table { border-collapse: collapse; font-size: .79rem; width: 100%; min-width: 860px; background: white; }
 table.data-table thead th {
@@ -224,7 +224,7 @@ table.data-table code {
 .badge-posible { background: #FEF3C7; color: #92400E; }
 .badge-yaesta  { background: #DBEAFE; color: #1E3A8A; }
 
-/* ── STEPS (proximos pasos) ──────────────────────────────────────── */
+/* ── STEPS ───────────────────────────────────────────────────────── */
 .steps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
 .step-item {
   background: var(--white); border-radius: var(--radius);
@@ -268,7 +268,7 @@ footer {
     <h1>Arquitectura propuesta &amp; Workflows N8N</h1>
     <p>N8N como hub central de integraci&oacute;n SAP &harr; Tookane</p>
     <div class="hero-meta">
-      <span class="hero-chip">Actualizado: <strong>10/06/2026 12:29</strong></span>
+      <span class="hero-chip">Actualizado: <strong>10/06/2026 12:43</strong></span>
       <span class="hero-chip">PostgreSQL <strong>actiu_co</strong></span>
     </div>
   </div>
