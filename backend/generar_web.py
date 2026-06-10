@@ -31,12 +31,10 @@ SAP_CSV       = r'C:\Users\medina\Downloads\CAMPOS PARA SUBIR A TOOKANE - Hoja 1
 SKIP_HEADINGS = {
     'estado de los 26 campos',   # → reemplazado por tabla CSV dedicada
     'próximos pasos',            # → reemplazado por sección estática en el template
+    'sap s4',                    # intro del notebook — duplica el hero + contiene caja oscura no deseada
 }
 
-# Headings a suprimir del renderizado (contenido se mantiene, sólo se oculta el h2)
-SUPPRESS_HEADINGS = {
-    'sap s4',         # título del notebook — duplica el hero de la página
-}
+# (SUPPRESS_HEADINGS eliminado — su único uso era 'sap s4', ahora en SKIP_HEADINGS)
 
 # Fragmentos de texto a eliminar del contenido extraído del notebook
 FILTER_PARAGRAPHS = [
@@ -336,7 +334,8 @@ def extract_notebook_sections(html_path):
             if heading_tag:
                 if (current['html_parts'] or current['heading']) and not skip_current:
                     sections.append(current)
-                heading_text = heading_tag.get_text(strip=True)
+                # get_text() incluye '¶' del anchor-link de JupyterLab — eliminarlo
+                heading_text = heading_tag.get_text(strip=True).replace('¶', '').strip()
                 skip_current = any(s in heading_text.lower() for s in SKIP_HEADINGS)
                 current = {
                     'heading': heading_text,
@@ -464,16 +463,20 @@ def build_sap_table_rows(df):
 def build_notebook_html(sections):
     """Render extracted sections as HTML with section-title headings."""
     parts = []
+    used_anchors = set()   # evitar IDs duplicados en el DOM
     for sec in sections:
         if not sec['html_parts'] and not sec['heading']:
             continue
         anchor = sec.get('anchor') or ''
-        anchor_attr = f' id="{anchor}"' if anchor else ''
+        # Solo asignar id= la primera vez que aparece un anchor concreto
+        if anchor and anchor not in used_anchors:
+            anchor_attr = f' id="{anchor}"'
+            used_anchors.add(anchor)
+        else:
+            anchor_attr = ''
         body = '\n'.join(sec['html_parts'])
         heading = sec.get('heading') or ''
-        # Suprimir headings que duplican el hero u otros elementos de la página
-        suppress = any(s in heading.lower() for s in SUPPRESS_HEADINGS)
-        if heading and not suppress:
+        if heading:
             parts.append(
                 f'<section{anchor_attr}>\n'
                 f'<h2 class="section-title">{heading}</h2>\n'
