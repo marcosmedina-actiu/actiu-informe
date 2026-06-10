@@ -1,0 +1,172 @@
+{
+  "grupos": [
+    {
+      "titulo": "Cabecera de transporte / expedición",
+      "subtitulo": "Para crear el envío en Tookane (W1) y registrarlo en PostgreSQL",
+      "color": "#0D9488",
+      "campos": [
+        {
+          "campo": "N.º de transporte SAP",
+          "desc": "Clave primaria CHAR(10) del documento de transporte",
+          "tabla": "VTTK.TKNUM"
+        },
+        {
+          "campo": "Tipo de expedición",
+          "desc": "Clasificación del tipo de envío (SHTYP)",
+          "tabla": "VTTK.SHTYP"
+        },
+        {
+          "campo": "Ruta",
+          "desc": "Ruta logística planificada",
+          "tabla": "VTTK.ROUTE"
+        },
+        {
+          "campo": "Modo de transporte",
+          "desc": "Carretera, aéreo, marítimo… (VSART)",
+          "tabla": "VTTK.VSART"
+        },
+        {
+          "campo": "Fecha planificada de carga",
+          "desc": "Cuándo se carga el camión en almacén",
+          "tabla": "VTTK.TPLDA"
+        },
+        {
+          "campo": "Fecha planificada de entrega",
+          "desc": "Fecha prevista en destino",
+          "tabla": "VTTK.TDATBF"
+        },
+        {
+          "campo": "Estado global de planificación",
+          "desc": "Filtro de sync: 0=Planificado, 1=Plan completo (listo para Tookane), 2=Check-in. Los estados operativos posteriores los gestiona Tookane vía webhook W2, no SAP.",
+          "tabla": "VTTK.STTRG"
+        },
+        {
+          "campo": "Matrícula / ID del vehículo",
+          "desc": "Identificador del medio de transporte",
+          "tabla": "VTTK.TRAID"
+        },
+        {
+          "campo": "Código transportista SAP",
+          "desc": "Nº de proveedor (FK → LFA1.LIFNR para nombre)",
+          "tabla": "VTTK.TDLNR"
+        },
+        {
+          "campo": "Transportista adjudicado",
+          "desc": "Carrier que aceptó la licitación (tender)",
+          "tabla": "VTTK.TNDR_CARR"
+        },
+        {
+          "campo": "Punto de expedición",
+          "desc": "Almacén / planta de origen",
+          "tabla": "VTTK.VSTEL"
+        }
+      ]
+    },
+    {
+      "titulo": "Datos del cliente / destino",
+      "subtitulo": "Dirección de entrega y contacto para Tookane y para CO",
+      "color": "#2563EB",
+      "campos": [
+        {
+          "campo": "Número de cliente SAP",
+          "desc": "Clave para cruzar con la BD clientes de CO",
+          "tabla": "KNA1.KUNNR"
+        },
+        {
+          "campo": "Nombre del cliente",
+          "desc": "Razón social completa",
+          "tabla": "KNA1.NAME1"
+        },
+        {
+          "campo": "Dirección de entrega",
+          "desc": "Calle, ciudad, CP, país",
+          "tabla": "KNA1 / ADRC"
+        },
+        {
+          "campo": "País destino",
+          "desc": "Clave país ISO (para alertas ETA internacionales)",
+          "tabla": "KNA1.LAND1"
+        },
+        {
+          "campo": "Email / teléfono de contacto",
+          "desc": "Datos de contacto en destino",
+          "tabla": "ADR6 / ADR2"
+        }
+      ]
+    },
+    {
+      "titulo": "Cabecera del pedido de venta",
+      "subtitulo": "Para vincular el envío con el pedido comercial (W1 + visibilidad CO)",
+      "color": "#7C3AED",
+      "campos": [
+        {
+          "campo": "N.º de pedido de venta",
+          "desc": "Referencia comercial principal",
+          "tabla": "VBAK.VBELN"
+        },
+        {
+          "campo": "Fecha del pedido",
+          "desc": "Fecha de creación del pedido",
+          "tabla": "VBAK.ERDAT"
+        },
+        {
+          "campo": "Referencia del cliente (PO)",
+          "desc": "N.º de pedido del cliente en su sistema",
+          "tabla": "VBAK.BSTNK"
+        },
+        {
+          "campo": "Importe neto",
+          "desc": "Valor del pedido para métricas CO",
+          "tabla": "VBAK.NETWR"
+        },
+        {
+          "campo": "Moneda",
+          "desc": "Divisa del pedido",
+          "tabla": "VBAK.WAERK"
+        },
+        {
+          "campo": "Número de cliente",
+          "desc": "Para enlazar con datos del cliente arriba",
+          "tabla": "VBAK.KUNNR"
+        }
+      ]
+    },
+    {
+      "titulo": "Artículos / bultos del envío",
+      "subtitulo": "Detalle de qué va en el transporte (peso, volumen, referencias)",
+      "color": "#EA580C",
+      "campos": [
+        {
+          "campo": "N.º de entrega (albarán)",
+          "desc": "Documento de entrega asociado al transporte",
+          "tabla": "LIKP.VBELN"
+        },
+        {
+          "campo": "Referencia de artículo",
+          "desc": "Material SAP enviado",
+          "tabla": "LIPS.MATNR"
+        },
+        {
+          "campo": "Descripción del artículo",
+          "desc": "Nombre legible del producto",
+          "tabla": "LIPS.ARKTX"
+        },
+        {
+          "campo": "Cantidad entregada",
+          "desc": "Unidades por posición de entrega",
+          "tabla": "LIPS.LFIMG"
+        },
+        {
+          "campo": "Peso bruto total",
+          "desc": "Para Tookane (gestión de carga)",
+          "tabla": "LIKP.BRGEW"
+        },
+        {
+          "campo": "Volumen total",
+          "desc": "Para Tookane (gestión de carga)",
+          "tabla": "LIKP.VOLUM"
+        }
+      ]
+    }
+  ]
+}
