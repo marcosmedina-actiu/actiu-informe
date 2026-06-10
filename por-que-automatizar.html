@@ -244,23 +244,26 @@ table.data-table code {
 .step-desc  { font-size: .77rem; color: var(--text2); line-height: 1.45; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   N8N STYLE — Arquitectura & Workflows page
+   N8N STYLE — body.page-arquitectura
+   Especificidad (0,1,2) > section:nth-child(odd) (0,1,1)
    ═══════════════════════════════════════════════════════════════════ */
-.n8n-content { background: #0F1117; flex: 1; }
-.n8n-content section {
+body.page-arquitectura { background: #0F1117; }
+body.page-arquitectura .page-content { background: #0F1117; }
+body.page-arquitectura section {
   background: #0F1117;
   color: #C9D1D9;
 }
-.n8n-content section:nth-child(odd) { background: #141620; }
+body.page-arquitectura section:nth-child(even) { background: #141620; }
 
-.n8n-content h2.section-title {
+body.page-arquitectura h2.section-title {
   color: #FF6D5A;
   border-bottom-color: rgba(255,109,90,.3);
 }
-.n8n-content h2.section-title::before { background: #FF6D5A; }
+body.page-arquitectura h2.section-title::before { background: #FF6D5A; }
+body.page-arquitectura p.section-sub { color: #64748B; }
 
-/* Workflow node cards — each h3 becomes a node header */
-.n8n-content .nb-markdown h3 {
+/* Workflow node cards — h3 como nodo n8n */
+body.page-arquitectura .nb-markdown h3 {
   background: #1C2030;
   border: 1px solid #2A3050;
   border-left: 4px solid #FF6D5A;
@@ -272,74 +275,62 @@ table.data-table code {
   margin: 20px 0 8px;
   letter-spacing: .01em;
 }
-.n8n-content .nb-markdown h1,
-.n8n-content .nb-markdown h2 {
+body.page-arquitectura .nb-markdown h1,
+body.page-arquitectura .nb-markdown h2 {
   color: #CBD5E1;
   border-bottom-color: rgba(255,255,255,.1);
 }
-.n8n-content .nb-markdown h4 { color: #94A3B8; font-weight: 600; }
-.n8n-content .nb-markdown p { color: #94A3B8; font-size: .9rem; }
-.n8n-content .nb-markdown ul,
-.n8n-content .nb-markdown ol { color: #94A3B8; font-size: .9rem; }
-.n8n-content .nb-markdown li { color: #94A3B8; margin-bottom: 4px; }
-.n8n-content .nb-markdown strong { color: #E2E8F0; font-weight: 700; }
-.n8n-content .nb-markdown em { color: #7DD3FC; font-style: normal; }
-.n8n-content .nb-markdown code {
+body.page-arquitectura .nb-markdown h4 { color: #94A3B8; }
+body.page-arquitectura .nb-markdown p  { color: #94A3B8; font-size: .9rem; }
+body.page-arquitectura .nb-markdown ul,
+body.page-arquitectura .nb-markdown ol { color: #94A3B8; }
+body.page-arquitectura .nb-markdown li { color: #94A3B8; margin-bottom: 4px; }
+body.page-arquitectura .nb-markdown strong { color: #E2E8F0; }
+body.page-arquitectura .nb-markdown em   { color: #7DD3FC; font-style: normal; }
+body.page-arquitectura .nb-markdown code {
   background: rgba(125,211,252,.1);
   color: #7DD3FC;
   border: 1px solid rgba(125,211,252,.2);
-  font-size: .82em;
 }
-.n8n-content .nb-markdown blockquote {
+body.page-arquitectura .nb-markdown blockquote {
   border-left-color: #FF6D5A;
   background: rgba(255,109,90,.08);
   color: #FDBA74;
 }
-.n8n-content .nb-markdown hr { border-top-color: rgba(255,255,255,.08); }
-.n8n-content p.section-sub { color: #64748B; }
+body.page-arquitectura .nb-markdown hr { border-top-color: rgba(255,255,255,.08); }
 
-/* Tables inside n8n sections */
-.n8n-content .nb-output table th,
-.n8n-content .nb-markdown table th {
-  background: #FF6D5A !important;
-  color: white !important;
+/* Tablas dentro de secciones n8n */
+body.page-arquitectura .nb-output table th,
+body.page-arquitectura .nb-markdown table th {
+  background: #FF6D5A !important; color: white !important;
 }
-.n8n-content .nb-output table td,
-.n8n-content .nb-markdown table td {
-  background: #1C2030 !important;
-  color: #CBD5E1;
+body.page-arquitectura .nb-output table td,
+body.page-arquitectura .nb-markdown table td {
+  background: #1C2030 !important; color: #CBD5E1;
   border-bottom-color: rgba(255,255,255,.06);
 }
-.n8n-content .nb-output table tr:nth-child(even) td,
-.n8n-content .nb-markdown table tr:nth-child(even) td {
-  background: #252B3B !important;
-}
-.n8n-content .nb-output table tr:hover td,
-.n8n-content .nb-markdown table tr:hover td {
-  background: rgba(255,109,90,.1) !important;
-}
-.n8n-content .nb-output pre {
-  background: #1C2030;
-  border-color: rgba(255,255,255,.1);
-  color: #94A3B8;
+body.page-arquitectura .nb-output table tr:nth-child(even) td { background: #252B3B !important; }
+body.page-arquitectura .nb-output table tr:hover td { background: rgba(255,109,90,.1) !important; }
+body.page-arquitectura .nb-output pre {
+  background: #1C2030; border-color: rgba(255,255,255,.1); color: #94A3B8;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   POSTGRESQL STYLE — Base de datos page
+   POSTGRESQL STYLE — body.page-bd
+   Especificidad (0,1,2) > section:nth-child(odd) (0,1,1)
    ═══════════════════════════════════════════════════════════════════ */
-.pg-content { flex: 1; }
-.pg-content section { background: var(--white); }
-.pg-content section:nth-child(odd) { background: #F0F7FF; }
+body.page-bd section { background: var(--white); }
+body.page-bd section:nth-child(even) { background: #F0F7FF; }
 
-.pg-content h2.section-title {
+body.page-bd h2.section-title {
   color: #1A5276;
   border-bottom-color: #336791;
 }
-.pg-content h2.section-title::before { background: #336791; }
-.pg-content p.section-sub { color: #5D6D7E; }
+body.page-bd h2.section-title::before { background: #336791; }
+body.page-bd p.section-sub { color: #5D6D7E; }
 
-/* Column/type badges — schema display */
-.pg-content .nb-markdown h3 {
+/* h3 como tabla/entidad PostgreSQL */
+body.page-bd .nb-markdown h3 {
   color: #1A5276;
   background: #EBF5FB;
   border: 1px solid #AED6F1;
@@ -349,40 +340,29 @@ table.data-table code {
   font-size: .87rem;
   margin: 20px 0 8px;
 }
-.pg-content .nb-markdown h4 { color: #336791; }
-.pg-content .nb-markdown strong { color: #1A5276; }
-.pg-content .nb-markdown code {
-  background: #EBF5FB;
-  color: #154360;
-  border: 1px solid #AED6F1;
+body.page-bd .nb-markdown h4     { color: #336791; }
+body.page-bd .nb-markdown strong { color: #1A5276; }
+body.page-bd .nb-markdown code {
+  background: #EBF5FB; color: #154360; border: 1px solid #AED6F1;
 }
-.pg-content .nb-markdown blockquote {
-  border-left-color: #336791;
-  background: #EBF5FB;
-  color: #1A5276;
+body.page-bd .nb-markdown blockquote {
+  border-left-color: #336791; background: #EBF5FB; color: #1A5276;
 }
-.pg-content .nb-markdown p { color: #2C3E50; }
-.pg-content .nb-markdown ul,
-.pg-content .nb-markdown ol { color: #2C3E50; }
+body.page-bd .nb-markdown p  { color: #2C3E50; }
+body.page-bd .nb-markdown ul,
+body.page-bd .nb-markdown ol { color: #2C3E50; }
 
-/* Tables in PG sections */
-.pg-content .nb-output table th,
-.pg-content .nb-markdown table th {
-  background: #336791 !important;
-  color: white !important;
+/* Tablas en secciones PG */
+body.page-bd .nb-output table th,
+body.page-bd .nb-markdown table th {
+  background: #336791 !important; color: white !important;
   font-size: .73rem; letter-spacing: .04em;
 }
-.pg-content .nb-output table td,
-.pg-content .nb-markdown table td {
-  background: white;
-  border-bottom-color: #D6EAF8;
-}
-.pg-content .nb-output table tr:nth-child(even) td { background: #F0F7FF !important; }
-.pg-content .nb-output table tr:hover td { background: #EBF5FB !important; }
-.pg-content .nb-output pre {
-  background: #F0F7FF;
-  border-color: #AED6F1;
-  color: #1A5276;
+body.page-bd .nb-output table td { background: white; border-bottom-color: #D6EAF8; }
+body.page-bd .nb-output table tr:nth-child(even) td { background: #F0F7FF !important; }
+body.page-bd .nb-output table tr:hover td { background: #EBF5FB !important; }
+body.page-bd .nb-output pre {
+  background: #F0F7FF; border-color: #AED6F1; color: #1A5276;
 }
 
 /* ── FOOTER ──────────────────────────────────────────────────────── */
@@ -402,7 +382,7 @@ footer {
 }
 </style>
 </head>
-<body>
+<body class="page-problema">
 
 <nav><a href="index.html" class="nav-brand"><span class="logo-dot"></span><span>Actiu CO</span></a><a href="index.html" class="nav-link">M&eacute;tricas</a><a href="por-que-automatizar.html" class="nav-link active">Por qu&eacute; automatizar</a><a href="arquitectura.html" class="nav-link">Arquitectura &amp; Workflows</a><a href="base-de-datos.html" class="nav-link">Base de datos</a><a href="resumen.html" class="nav-link">Resumen &amp; Pr&oacute;ximos pasos</a></nav>
 
@@ -411,7 +391,7 @@ footer {
     <h1>Por qu&eacute; automatizar SAP &harr; Tookane</h1>
     <p>An&aacute;lisis de brechas y los 26 campos de integraci&oacute;n</p>
     <div class="hero-meta">
-      <span class="hero-chip">Actualizado: <strong>10/06/2026 13:09</strong></span>
+      <span class="hero-chip">Actualizado: <strong>10/06/2026 13:15</strong></span>
       <span class="hero-chip">PostgreSQL <strong>actiu_co</strong></span>
     </div>
   </div>
