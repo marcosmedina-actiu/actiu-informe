@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>CO Actiu &mdash; SAP &harr; Tookane</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <style>/* ── Variables — Actiu brand (actiu.com/es) ──────────────────────── */
 :root {
   --black:   #1B1B1B;
@@ -343,6 +343,24 @@ table.data-table code {
   font-size: .68rem; color: var(--text2); font-weight: 500;
 }
 .wf-step-arrow { color: var(--gray5); font-size: .7rem; align-self: center; }
+.wf-beneficia {
+  display: flex; align-items: flex-start; gap: 5px;
+  font-size: .69rem; color: var(--text2); margin-bottom: 6px;
+}
+.wf-kpi-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 8px;
+}
+.wf-kpi {
+  border-radius: 6px; padding: 7px 10px; font-size: .72rem; line-height: 1.45;
+}
+.wf-kpi-lbl {
+  font-size: .6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .06em; margin-bottom: 3px;
+}
+.wf-kpi-antes   { background: #FEE2E2; color: #7F1D1D; }
+.wf-kpi-antes   .wf-kpi-lbl { color: #991B1B; }
+.wf-kpi-despues { background: #DCFCE7; color: #14532D; }
+.wf-kpi-despues .wf-kpi-lbl { color: #166534; }
 .wf-blocker {
   margin-top: 7px; padding: 5px 9px;
   background: #FEF2F2; border-radius: 5px; border-left: 3px solid #EF4444;
@@ -420,7 +438,7 @@ footer {
     <h1>Por qu&eacute; automatizar SAP &harr; Tookane</h1>
     <p>An&aacute;lisis de brechas y los 26 campos de integraci&oacute;n</p>
     <div class="hero-meta">
-      <span class="hero-chip">Actualizado: <strong>10/06/2026 13:25</strong></span>
+      <span class="hero-chip">Actualizado: <strong>10/06/2026 13:56</strong></span>
       <span class="hero-chip">PostgreSQL <strong>actiu_co</strong></span>
     </div>
   </div>
