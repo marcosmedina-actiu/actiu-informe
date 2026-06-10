@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SAP &harr; Tookane &mdash; Customer Operations Actiu</title>
+<style>
+:root {
+  --navy:  #1B2D4F;
+  --blue:  #2563EB;
+  --teal:  #0D9488;
+  --coral: #EF4444;
+  --gold:  #F59E0B;
+  --green: #16A34A;
+  --gray:  #64748B;
+  --light: #F1F5F9;
+  --purple:#7C3AED;
+  --orange:#EA580C;
+  --white: #FFFFFF;
+  --text:  #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+       background: #F8FAFC; color: var(--text); font-size: 15px; line-height: 1.6; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--navy); padding: 0 24px;
+  display: flex; align-items: center; gap: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3); flex-wrap: wrap;
+}
+nav .brand { color: white; font-weight: 800; font-size: 1rem;
+             padding: 16px 12px 16px 0; margin-right: 16px;
+             border-right: 1px solid rgba(255,255,255,.2); white-space: nowrap; }
+nav a { color: rgba(255,255,255,.75); text-decoration: none; padding: 18px 14px;
+        font-size: .85rem; font-weight: 500; transition: color .15s; white-space: nowrap; }
+nav a:hover { color: white; }
+
+/* HERO */
+.hero { background: var(--navy); color: white; padding: 56px 40px 48px; }
+.hero h1 { font-size: 2rem; font-weight: 900; margin-bottom: 8px; }
+.hero p  { color: #93C5FD; font-size: 1rem; max-width: 640px; }
+.hero .meta { margin-top: 18px; font-size: .8rem; color: rgba(255,255,255,.5); }
+
+/* SECTIONS */
+section { padding: 48px 40px; }
+section:nth-child(even) { background: white; }
+h2.section-title {
+  font-size: 1.4rem; font-weight: 800; color: var(--navy);
+  margin-bottom: 6px; padding-bottom: 10px;
+  border-bottom: 3px solid var(--blue);
+}
+p.section-sub { color: var(--gray); font-size: .9rem; margin-bottom: 28px; margin-top: 4px; }
+
+/* KPI CARDS */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: 16px; margin-bottom: 32px; }
+.kpi-card { background: white; border-radius: 12px; padding: 20px;
+            border-left: 4px solid var(--blue); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.kpi-card .value { font-size: 2rem; font-weight: 900; color: var(--navy); line-height: 1; }
+.kpi-card .label { font-size: .78rem; color: var(--gray); margin-top: 4px; font-weight: 600;
+                   text-transform: uppercase; letter-spacing: .05em; }
+.kpi-card .sub   { font-size: .78rem; color: var(--teal); margin-top: 6px; }
+
+/* CHARTS */
+.charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+.chart-box  { background: white; border-radius: 12px; padding: 20px;
+              box-shadow: 0 1px 4px rgba(0,0,0,.08); text-align: center; }
+.chart-box img { max-width: 100%; }
+.chart-title { font-size: .85rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+
+/* NOTEBOOK CONTENT */
+.nb-section { margin-bottom: 40px; }
+
+.nb-markdown h1, .nb-markdown h2 {
+  font-size: 1.3rem; font-weight: 800; color: var(--navy);
+  margin: 32px 0 8px; padding-bottom: 8px;
+  border-bottom: 2px solid var(--light);
+}
+.nb-markdown h3, .nb-markdown h4 {
+  font-size: 1.05rem; font-weight: 700; color: #334155;
+  margin: 24px 0 6px;
+}
+.nb-markdown p  { color: #334155; margin: 0 0 12px; }
+.nb-markdown ul, .nb-markdown ol { padding-left: 24px; margin: 0 0 12px; color: #334155; }
+.nb-markdown li { margin-bottom: 4px; }
+.nb-markdown strong { color: var(--navy); font-weight: 700; }
+.nb-markdown code { background: #F1F5F9; padding: 1px 5px; border-radius: 3px;
+                    font-family: monospace; font-size: .88em; }
+.nb-markdown blockquote { border-left: 3px solid var(--blue); margin: 12px 0;
+                          padding: 8px 16px; background: #EFF6FF; color: #1E40AF; }
+
+.nb-output { margin: 20px 0; }
+.nb-output img { max-width: 100%; display: block; margin: 0 auto; border-radius: 8px; }
+
+/* Notebook tables (overrides JupyterLab inline styles where possible) */
+.nb-output table, .nb-markdown table {
+  border-collapse: collapse; font-size: .82rem;
+  margin: 0 auto 16px; width: auto; max-width: 100%;
+}
+.nb-output table th, .nb-markdown table th {
+  background: var(--navy) !important; color: white !important;
+  padding: 8px 14px; text-align: left; font-weight: 700; white-space: nowrap;
+}
+.nb-output table td, .nb-markdown table td {
+  padding: 7px 14px; border-bottom: 1px solid #E2E8F0; vertical-align: top;
+}
+.nb-output table tr:hover { background: var(--light); }
+/* Override JupyterLab background colors on td */
+.nb-output table td[style*="background"] { background: inherit !important; }
+
+/* text output */
+.nb-output pre { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px;
+                 padding: 12px 16px; font-size: .8rem; color: #334155; overflow-x: auto; }
+
+/* SAP TABLE (dedicated section) */
+table.data-table { border-collapse: collapse; font-size: .82rem; }
+table.data-table thead th {
+  background: var(--navy); color: white; padding: 10px 14px;
+  text-align: left; font-weight: 700; white-space: nowrap;
+}
+table.data-table tbody td { padding: 8px 14px; border-bottom: 1px solid #E2E8F0; vertical-align: top; font-size: .8rem; }
+table.data-table tbody tr:hover { background: var(--light); }
+table.data-table code { font-family: monospace; font-size: .85em; color: var(--navy); background: #F1F5F9; padding: 1px 4px; border-radius: 3px; }
+.badge { display: inline-block; border-radius: 4px; padding: 2px 8px; font-size: .72rem; font-weight: 700; white-space: nowrap; }
+.badge-ok     { background: #DCFCE7; color: #166534; }
+.badge-extra  { background: #FEF9C3; color: #854D0E; }
+.badge-parcial{ background: #FEF3C7; color: #92400E; }
+.badge-no     { background: #FEE2E2; color: #991B1B; }
+.badge-si     { background: #DCFCE7; color: #166534; }
+.badge-eval   { background: #EDE9FE; color: #5B21B6; }
+.badge-posible{ background: #FEF3C7; color: #92400E; }
+.badge-yaesta { background: #DBEAFE; color: #1E40AF; }
+
+/* NEXT STEPS */
+.steps-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.step-item { background: white; border-radius: 10px; padding: 16px 20px;
+             display: flex; align-items: flex-start; gap: 14px;
+             box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.step-num { min-width: 28px; height: 28px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center;
+            font-weight: 800; font-size: .8rem; color: white; flex-shrink: 0; }
+.step-content .title { font-weight: 700; font-size: .9rem; }
+.step-content .desc  { font-size: .82rem; color: var(--gray); margin-top: 2px; }
+
+footer { background: var(--navy); color: rgba(255,255,255,.5); text-align: center;
+         padding: 24px; font-size: .8rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">Actiu CO</span>
+  <a href="#kpis">Estado live</a>
+  <a href="#problema">Por qu&eacute; automatizar</a>
+  <a href="#brechas">26 campos SAP</a>
+  <a href="#arquitectura">Arquitectura</a>
+  <a href="#workflows">Workflows</a>
+  <a href="#bd">Base de datos</a>
+  <a href="#resumen">Resumen</a>
+  <a href="#pasos">Pr&oacute;ximos pasos</a>
+</nav>
+
+<div class="hero">
+  <h1>SAP S/4 &harr; Tookane &mdash; Automatizaci&oacute;n Customer Operations</h1>
+  <p>An&aacute;lisis de brechas, arquitectura propuesta, estado del proyecto y m&eacute;tricas en tiempo real</p>
+  <div class="meta">Actualizado: {{LAST_UPDATE}} &nbsp;&bull;&nbsp; Customer Operations &middot; Actiu</div>
+</div>
+
+<!-- SECTION 1: live KPIs from PostgreSQL -->
+<section id="kpis">
+  <h2 class="section-title">Estado actual &mdash; datos en tiempo real</h2>
+  <p class="section-sub">Consultado directamente desde PostgreSQL actiu_co al generar esta p&aacute;gina</p>
+  <div class="kpi-grid">{{KPI_CARDS}}</div>
+  <div class="charts-row">{{CHARTS}}</div>
+</section>
+
+<!-- SECTION 2: full SAP fields table from CSV (all columns) -->
+<section id="brechas">
+  <h2 class="section-title">Brechas SAP &rarr; Tookane &mdash; 26 campos</h2>
+  <p class="section-sub">Todos los campos que SAP debe comunicar a Tookane. Los campos en <strong>EXTRAINFO</strong> llegan a Tookane pero el TMS no puede actuar sobre ellos autom&aacute;ticamente.</p>
+  <div style="overflow-x:auto">
+    <table class="data-table" style="width:auto;min-width:900px">
+      <thead>
+        <tr>
+          <th>Campo SAP</th>
+          <th>Tabla.Campo t&eacute;cnico</th>
+          <th>Estado en Tookane</th>
+          <th>&iquest;Notificar transportista?</th>
+          <th>&iquest;D&oacute;nde aparece en Tookane?</th>
+          <th>Uso en Actiu</th>
+          <th>&iquest;Lo subimos?</th>
+        </tr>
+      </thead>
+      <tbody>{{SAP_TABLE_ROWS}}</tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SECTIONS 3-N: extracted from analisis_sap_tookane.ipynb notebook -->
+{{NOTEBOOK_SECTIONS}}
+
+<!-- LAST SECTION: next steps -->
+<section id="pasos">
+  <h2 class="section-title">Pr&oacute;ximos pasos</h2>
+  <p class="section-sub">Acciones ordenadas por bloqueo t&eacute;cnico. Prerequisito: PostgreSQL en servidor n8n.</p>
+  <ol class="steps-list">{{PROXIMOS_PASOS}}</ol>
+</section>
+
+<footer>Customer Operations &middot; Actiu &mdash; Generado autom&aacute;ticamente desde PostgreSQL actiu_co &amp; analisis_sap_tookane.ipynb</footer>
+
+</body>
+</html>
