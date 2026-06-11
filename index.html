@@ -428,6 +428,7 @@ footer {
   .kpi-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -438,7 +439,7 @@ footer {
     <h1>M&eacute;tricas operativas &mdash; CO Actiu</h1>
     <p>Datos en tiempo real desde PostgreSQL actiu_co</p>
     <div class="hero-meta">
-      <span class="hero-chip">Actualizado: <strong>11/06/2026 13:23</strong></span>
+      <span class="hero-chip">Actualizado: <strong>11/06/2026 13:37</strong></span>
       <span class="hero-chip">PostgreSQL <strong>actiu_co</strong></span>
     </div>
   </div>
@@ -453,10 +454,43 @@ footer {
 <p class="section-sub">Consultado al generar esta p&aacute;gina &middot; 4,171 expediciones &middot; 47 carriers &middot; 346 casos CO</p>
 <div class="kpi-grid"><div class="kpi-card"><div class="kpi-value">4171</div><div class="kpi-label">Env&iacute;os en BD</div><div class="kpi-sub">expediciones registradas</div></div><div class="kpi-card"><div class="kpi-value">100.0%</div><div class="kpi-label">Vinculados a carrier</div><div class="kpi-sub">4,170 con transportista_id</div></div><div class="kpi-card"><div class="kpi-value">80%</div><div class="kpi-label">Entregados</div><div class="kpi-sub">3,320 de 4,171 con estado Completado</div></div><div class="kpi-card"><div class="kpi-value">346</div><div class="kpi-label">Casos CO</div><div class="kpi-sub">historial completo</div></div><div class="kpi-card"><div class="kpi-value">41</div><div class="kpi-label">Incidencias registradas</div><div class="kpi-sub">casos con tipo clasificado</div></div><div class="kpi-card"><div class="kpi-value">13</div><div class="kpi-label">Pa&iacute;ses</div><div class="kpi-sub">destinos con casos registrados</div></div><div class="kpi-card"><div class="kpi-value">22/47</div><div class="kpi-label">Carriers con BP SAP</div><div class="kpi-sub">25 sin BP a&uacute;n</div></div><div class="kpi-card"><div class="kpi-value">71</div><div class="kpi-label">Contactos carriers</div><div class="kpi-sub">55 contactos únicos</div></div><div class="kpi-card"><div class="kpi-value">48</div><div class="kpi-label">Clientes en BD</div><div class="kpi-sub">desde Notion CO</div></div><div class="kpi-card"><div class="kpi-value">52</div><div class="kpi-label">Patrones aprendidos</div><div class="kpi-sub">tipo_caso + dominio confirmados</div></div><div class="kpi-card"><div class="kpi-value">8</div><div class="kpi-label">Procedimientos CO</div><div class="kpi-sub">sincronizados desde Notion</div></div><div class="kpi-card"><div class="kpi-value">8</div><div class="kpi-label">Workflows N8N</div><div class="kpi-sub">importados &middot; pendiente servidor</div></div></div>
 </section>
+<section id="charts">
+<h2 class="section-title">Tendencias</h2>
+<p class="section-sub">&Uacute;ltimas 8 semanas &middot; Top carriers por env&iacute;os</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px;">
+<div style="background:white;border-radius:12px;border:1px solid #E2E8F0;padding:20px;"><h3 style="font-size:.85rem;font-weight:700;color:#1E293B;margin:0 0 14px;">Casos CO por semana</h3><canvas id="chartCasos"></canvas></div>
+<div style="background:white;border-radius:12px;border:1px solid #E2E8F0;padding:20px;"><h3 style="font-size:.85rem;font-weight:700;color:#1E293B;margin:0 0 14px;">Top carriers &mdash; env&iacute;os</h3><canvas id="chartCarriers"></canvas></div>
+</div>
+<script>
+(function(){
+  var sl=["2026-05-11", "2026-05-18", "2026-05-25", "2026-06-01", "2026-06-08"],sv=[1, 1, 34, 233, 75];
+  var cl=["PFH Log\u00edstica", "Dachser", "Actiu - Medios propios", "Plataforma - Montador", "Diviplax", "Rhenus", "DSV", "TSB"],cv=[891, 544, 524, 406, 328, 167, 166, 146];
+  new Chart(document.getElementById("chartCasos"),{
+    type:"bar",
+    data:{labels:sl,datasets:[{label:"Casos",data:sv,
+      backgroundColor:"rgba(99,102,241,.75)",borderColor:"#6366F1",
+      borderWidth:1.5,borderRadius:5}]},
+    options:{responsive:true,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{font:{size:11}}},y:{beginAtZero:true,
+        ticks:{stepSize:1,font:{size:11}}}}}
+  });
+  new Chart(document.getElementById("chartCarriers"),{
+    type:"bar",
+    data:{labels:cl,datasets:[{label:"Env\u00edos",data:cv,
+      backgroundColor:"rgba(16,185,129,.75)",borderColor:"#10B981",
+      borderWidth:1.5,borderRadius:5}]},
+    options:{responsive:true,indexAxis:"y",
+      plugins:{legend:{display:false}},
+      scales:{x:{beginAtZero:true,ticks:{font:{size:11}}},
+        y:{ticks:{font:{size:11}}}}}
+  });
+})();
+</script>
+</section>
 
 </div>
 
 <footer>Customer Operations &middot; Actiu &mdash; Generado autom&aacute;ticamente desde PostgreSQL actiu_co</footer>
 
-<script>(function(){var _V="2026-06-11T13:23:53";setInterval(function(){fetch("version.json?_="+Date.now()).then(function(r){return r.json();}).then(function(d){if(d.ts!==_V)location.reload();}).catch(function(){});},300000);})();</script></body>
+<script>(function(){var _V="2026-06-11T13:37:21";setInterval(function(){fetch("version.json?_="+Date.now()).then(function(r){return r.json();}).then(function(d){if(d.ts!==_V)location.reload();}).catch(function(){});},300000);})();</script></body>
 </html>
