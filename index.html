@@ -438,7 +438,7 @@ footer {
     <h1>M&eacute;tricas operativas &mdash; CO Actiu</h1>
     <p>Datos en tiempo real desde PostgreSQL actiu_co</p>
     <div class="hero-meta">
-      <span class="hero-chip">Actualizado: <strong>11/06/2026 08:58</strong></span>
+      <span class="hero-chip">Actualizado: <strong>11/06/2026 09:43</strong></span>
       <span class="hero-chip">PostgreSQL <strong>actiu_co</strong></span>
     </div>
   </div>
@@ -452,6 +452,106 @@ footer {
 <h2 class="section-title">Datos en tiempo real &mdash; PostgreSQL actiu_co</h2>
 <p class="section-sub">Consultado al generar esta p&aacute;gina &middot; 4.098 expediciones &middot; 41 carriers &middot; 326 casos CO</p>
 <div class="kpi-grid"><div class="kpi-card"><div class="kpi-value">4098</div><div class="kpi-label">Env&iacute;os en BD</div><div class="kpi-sub">expediciones registradas</div></div><div class="kpi-card"><div class="kpi-value">99.8%</div><div class="kpi-label">Vinculados a carrier</div><div class="kpi-sub">4,088 con transportista_id</div></div><div class="kpi-card"><div class="kpi-value">81%</div><div class="kpi-label">Entregados</div><div class="kpi-sub">3,320 de 4,098 con estado Completado</div></div><div class="kpi-card"><div class="kpi-value">326</div><div class="kpi-label">Casos CO</div><div class="kpi-sub">historial completo</div></div><div class="kpi-card"><div class="kpi-value">41</div><div class="kpi-label">Incidencias registradas</div><div class="kpi-sub">casos con tipo clasificado</div></div><div class="kpi-card"><div class="kpi-value">13</div><div class="kpi-label">Pa&iacute;ses</div><div class="kpi-sub">destinos con casos registrados</div></div><div class="kpi-card"><div class="kpi-value">22/41</div><div class="kpi-label">Carriers con BP SAP</div><div class="kpi-sub">19 sin BP a&uacute;n</div></div><div class="kpi-card"><div class="kpi-value">66</div><div class="kpi-label">Contactos carriers</div><div class="kpi-sub">55 contactos únicos</div></div><div class="kpi-card"><div class="kpi-value">48</div><div class="kpi-label">Clientes en BD</div><div class="kpi-sub">desde Notion CO</div></div><div class="kpi-card"><div class="kpi-value">52</div><div class="kpi-label">Patrones aprendidos</div><div class="kpi-sub">tipo_caso + dominio confirmados</div></div><div class="kpi-card"><div class="kpi-value">8</div><div class="kpi-label">Procedimientos CO</div><div class="kpi-sub">sincronizados desde Notion</div></div><div class="kpi-card"><div class="kpi-value">8</div><div class="kpi-label">Workflows N8N</div><div class="kpi-sub">importados &middot; pendiente servidor</div></div></div>
+</section>
+<section id="notas-pagina" style="margin-top:48px;">
+<h2 class="section-title">Notas y propuestas</h2>
+<p class="section-sub">Escribe aqu&iacute; cualquier propuesta, correcci&oacute;n o comentario. Las notas se guardan en este navegador y aparecen cada vez que vuelvas a la p&aacute;gina.</p>
+<div style="background:white;border:1.5px solid #E2E8F0;border-radius:12px;overflow:hidden;"><div id="notas-lista"></div><div style="padding:16px 20px;border-top:1px solid #F1F5F9;"><textarea id="nota-input" rows="3" placeholder="Escribe una propuesta o corrección…" style="width:100%;border:1.5px solid #E2E8F0;border-radius:8px;padding:10px 14px;font-size:.85rem;font-family:inherit;color:#1E293B;resize:vertical;box-sizing:border-box;outline:none;line-height:1.5;transition:border-color .15s;" onfocus="this.style.borderColor='#6366F1'" onblur="this.style.borderColor='#E2E8F0'"></textarea><div style="display:flex;justify-content:flex-end;margin-top:8px;"><button onclick="notaGuardar()" style="background:#1B2D4F;color:white;border:none;border-radius:8px;padding:8px 22px;font-size:.83rem;font-weight:700;cursor:pointer;transition:opacity .15s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">&#43;&nbsp;Guardar nota</button></div></div></div><script>
+(function(){
+var _KEY='co_notes_'+window.location.pathname;
+function _load(){try{return JSON.parse(localStorage.getItem(_KEY)||"[]");}catch(e){return[];}}
+function _save(d){try{localStorage.setItem(_KEY,JSON.stringify(d));}catch(e){}}
+function _ts(){
+  var n=new Date();
+  return n.toLocaleDateString("es-ES",{day:"2-digit",month:"2-digit",year:"numeric"})  +" "+n.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"});
+}
+function _esc(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+function _render(){
+  var d=_load();
+  var el=document.getElementById("notas-lista");
+  if(!d.length){
+    el.innerHTML='<div style="padding:16px 20px;font-size:.83rem;color:#94A3B8;font-style:italic;">Sin notas todav\u00eda. S\u00e9 el primero en escribir una.</div>';
+    return;
+  }
+  el.innerHTML=d.map(function(n,i){
+    if(n.editing){
+      return '<div style="padding:14px 20px;border-bottom:1px solid #F1F5F9;">'
+        +'<textarea id="ne'+i+'" style="width:100%;min-height:72px;border:1.5px solid #6366F1;'
+        +'border-radius:8px;padding:8px 12px;font-size:.83rem;font-family:inherit;'
+        +'resize:vertical;box-sizing:border-box;outline:none;line-height:1.5;">'
+        +_esc(n.text)+'</textarea>'
+        +'<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px;">'
+        +'<button onclick="notaCancelar('+i+')" '
+        +'style="background:#F1F5F9;border:1px solid #CBD5E1;border-radius:6px;'
+        +'padding:5px 14px;cursor:pointer;font-size:.8rem;color:#475569;">'
+        +'Cancelar</button>'
+        +'<button onclick="notaActualizar('+i+')" '
+        +'style="background:#1B2D4F;color:white;border:none;border-radius:6px;'
+        +'padding:5px 18px;cursor:pointer;font-size:.8rem;font-weight:700;">'
+        +'Guardar cambios</button>'
+        +'</div></div>';
+    }
+    return '<div style="padding:14px 20px;border-bottom:1px solid #F1F5F9;'
+      +'display:flex;gap:14px;align-items:flex-start;">'
+      +'<div style="flex:1;min-width:0;">'
+      +'<div style="font-size:.73rem;color:#94A3B8;margin-bottom:4px;">\u2022 '+_esc(n.ts)+'</div>'
+      +'<div style="font-size:.85rem;color:#1E293B;white-space:pre-wrap;line-height:1.6;">'
+      +_esc(n.text)+'</div></div>'
+      +'<div style="display:flex;gap:6px;flex-shrink:0;padding-top:2px;">'
+      +'<button onclick="notaEditar('+i+')" '
+      +'style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:6px;'
+      +'padding:4px 12px;cursor:pointer;font-size:.78rem;color:#1D4ED8;font-weight:600;">'
+      +'Editar</button>'
+      +'<button onclick="notaEliminar('+i+')" '
+      +'style="background:#FEF2F2;border:1px solid #FECACA;border-radius:6px;'
+      +'padding:4px 12px;cursor:pointer;font-size:.78rem;color:#DC2626;font-weight:600;">'
+      +'Eliminar</button></div></div>';
+  }).join("");
+}
+window.notaGuardar=function(){
+  var t=document.getElementById("nota-input").value.trim();
+  if(!t)return;
+  var d=_load();
+  d.unshift({text:t,ts:_ts(),editing:false});
+  _save(d);
+  document.getElementById("nota-input").value="";
+  _render();
+};
+window.notaEditar=function(i){
+  var d=_load();
+  d.forEach(function(n,j){n.editing=(j===i);});
+  _save(d);_render();
+  setTimeout(function(){
+    var el=document.getElementById("ne"+i);
+    if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length);}
+  },30);
+};
+window.notaActualizar=function(i){
+  var el=document.getElementById("ne"+i);
+  if(!el)return;
+  var t=el.value.trim();
+  if(!t)return;
+  var d=_load();
+  d[i].text=t;d[i].editing=false;
+  _save(d);_render();
+};
+window.notaCancelar=function(i){
+  var d=_load();
+  d[i].editing=false;
+  _save(d);_render();
+};
+window.notaEliminar=function(i){
+  if(!confirm("\u00bfEliminar esta nota?"))return;
+  var d=_load();
+  d.splice(i,1);
+  _save(d);_render();
+};
+_render();
+})();
+</script>
+
 </section>
 
 </div>

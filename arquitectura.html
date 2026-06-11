@@ -438,7 +438,7 @@ footer {
     <h1>Arquitectura propuesta &amp; Workflows N8N</h1>
     <p>N8N como hub central de integraci&oacute;n SAP &harr; Tookane</p>
     <div class="hero-meta">
-      <span class="hero-chip">Actualizado: <strong>11/06/2026 08:58</strong></span>
+      <span class="hero-chip">Actualizado: <strong>11/06/2026 09:43</strong></span>
       <span class="hero-chip">PostgreSQL <strong>actiu_co</strong></span>
     </div>
   </div>
@@ -491,6 +491,106 @@ var st=document.getElementById("sap-st");st.style.color="#64748B";st.textContent
 document.getElementById("sap-wrap").innerHTML=vHtml(_D);document.getElementById("sap-eBtn").style.display="inline-flex";fetch(_RAW+"?_="+Date.now()).then(function(r){return r.json();}).then(function(d){if(document.getElementById("sap-bar").style.display!=="flex"){_D=d;document.getElementById("sap-wrap").innerHTML=vHtml(_D);}}).catch(function(){});})();
 </script>
 <div style="background:#EFF6FF;border:1.5px solid #BFDBFE;border-radius:12px;padding:20px 24px;margin-top:8px;"><div style="font-size:.72rem;font-weight:700;color:#1D4ED8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Propuesta para IT (Tino)</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;"><div style="background:white;border-radius:8px;padding:14px 16px;border:1px solid #DBEAFE;"><div style="font-size:.78rem;font-weight:800;color:#1E3A8A;margin-bottom:6px;">Opci&oacute;n A &mdash; Servicio OData est&aacute;ndar</div><p style="font-size:.8rem;color:#1E40AF;margin:0 0 6px;line-height:1.5;">Si ya existe un servicio OData de entregas/transportes activo en SAP Gateway (p. ej. <code style="background:#DBEAFE;padding:1px 5px;border-radius:3px;">API_OUTBOUND_DELIVERY_SRV</code>), IT solo necesita <strong>activarlo y dar credenciales de lectura</strong>. N8N llama al endpoint cada hora (o con la frecuencia que se acuerde).</p><span style="font-size:.72rem;color:#1D4ED8;font-weight:700;">&#9889; Esfuerzo IT: bajo</span></div><div style="background:#EFF6FF;border-radius:8px;padding:14px 16px;border:2px solid #93C5FD;"><div style="font-size:.78rem;font-weight:800;color:#1E3A8A;margin-bottom:4px;">Opci&oacute;n B &mdash; CDS View personalizada <span style="background:#DBEAFE;color:#1D4ED8;border-radius:4px;padding:1px 8px;font-size:.68rem;font-weight:700;margin-left:6px;">&#10026; Recomendado S/4HANA</span></div><p style="font-size:.8rem;color:#1E40AF;margin:0 0 6px;line-height:1.5;">IT crea una <strong>CDS View</strong> (nativa en S/4HANA) que une los campos de las tablas listadas arriba y la expone como servicio OData. Recibimos exactamente los campos que necesitamos, sin procesamiento extra en N8N. Mejor rendimiento, m&aacute;s f&aacute;cil de mantener y preparada para la futura integraci&oacute;n con SAP BTP.</p><span style="font-size:.72rem;color:#1D4ED8;font-weight:700;">&#9889; Esfuerzo IT: medio (1&ndash;2 d&iacute;as ABAP)</span></div></div><div style="margin-top:12px;padding:10px 14px;background:#DBEAFE;border-radius:8px;"><span style="font-size:.82rem;color:#1E3A8A;"><strong>Filtro de sincronizaci&oacute;n sugerido (STTRG):</strong> N8N filtra por <code style="background:white;padding:1px 5px;border-radius:3px;">STTRG = 1</code> (planificaci&oacute;n completada, listo para notificar a Tookane) o por fecha de creaci&oacute;n &ge; &uacute;ltima sync. Valores STTRG: <em>0=Planificado &middot; 1=Plan completo &middot; 2=Check-in</em>. Los estados operativos posteriores (carga, tr&aacute;nsito, entrega) los gestiona Tookane v&iacute;a webhook W2.</span></div><div style="margin-top:12px;padding:14px 16px;background:#FEF3C7;border-radius:8px;border:1px solid #FDE68A;"><div style="font-size:.72rem;font-weight:700;color:#92400E;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Preguntas previas para IT (Actiu usa S/4HANA)</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="font-size:.8rem;color:#78350F;"><strong>1. &iquest;M&oacute;dulo LE-TRA activo?</strong><br>La tabla VTTK solo tiene datos si Logistics Execution &mdash; Transportation est&aacute; activo. Si no, las expediciones est&aacute;n solo en LIKP/LIPS (entregas) sin documento de transporte.</div><div style="font-size:.8rem;color:#78350F;"><strong>2. &iquest;SAP Gateway habilitado?</strong><br>En S/4HANA el Gateway es componente est&aacute;ndar. Verificar que el sistema de destino para los servicios OData est&aacute; activo y accesible desde el servidor N8N.</div><div style="font-size:.8rem;color:#78350F;"><strong>3. &iquest;Autenticaci&oacute;n disponible?</strong><br>Basic Auth, OAuth2 o certificado X.509. Define si el endpoint OData puede abrirse hacia el servidor N8N sin pasar por SAP BTP.</div><div style="font-size:.8rem;color:#78350F;"><strong>4. &iquest;Push o Polling?</strong><br>Si SAP puede emitir un evento al crear una expedici&oacute;n, el flujo es en tiempo real. Si no, N8N hace polling cada X minutos filtrando por fecha o STTRG.</div></div></div></div>
+</section>
+<section id="notas-pagina" style="margin-top:48px;">
+<h2 class="section-title">Notas y propuestas</h2>
+<p class="section-sub">Escribe aqu&iacute; cualquier propuesta, correcci&oacute;n o comentario. Las notas se guardan en este navegador y aparecen cada vez que vuelvas a la p&aacute;gina.</p>
+<div style="background:white;border:1.5px solid #E2E8F0;border-radius:12px;overflow:hidden;"><div id="notas-lista"></div><div style="padding:16px 20px;border-top:1px solid #F1F5F9;"><textarea id="nota-input" rows="3" placeholder="Escribe una propuesta o corrección…" style="width:100%;border:1.5px solid #E2E8F0;border-radius:8px;padding:10px 14px;font-size:.85rem;font-family:inherit;color:#1E293B;resize:vertical;box-sizing:border-box;outline:none;line-height:1.5;transition:border-color .15s;" onfocus="this.style.borderColor='#6366F1'" onblur="this.style.borderColor='#E2E8F0'"></textarea><div style="display:flex;justify-content:flex-end;margin-top:8px;"><button onclick="notaGuardar()" style="background:#1B2D4F;color:white;border:none;border-radius:8px;padding:8px 22px;font-size:.83rem;font-weight:700;cursor:pointer;transition:opacity .15s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">&#43;&nbsp;Guardar nota</button></div></div></div><script>
+(function(){
+var _KEY='co_notes_'+window.location.pathname;
+function _load(){try{return JSON.parse(localStorage.getItem(_KEY)||"[]");}catch(e){return[];}}
+function _save(d){try{localStorage.setItem(_KEY,JSON.stringify(d));}catch(e){}}
+function _ts(){
+  var n=new Date();
+  return n.toLocaleDateString("es-ES",{day:"2-digit",month:"2-digit",year:"numeric"})  +" "+n.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"});
+}
+function _esc(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+function _render(){
+  var d=_load();
+  var el=document.getElementById("notas-lista");
+  if(!d.length){
+    el.innerHTML='<div style="padding:16px 20px;font-size:.83rem;color:#94A3B8;font-style:italic;">Sin notas todav\u00eda. S\u00e9 el primero en escribir una.</div>';
+    return;
+  }
+  el.innerHTML=d.map(function(n,i){
+    if(n.editing){
+      return '<div style="padding:14px 20px;border-bottom:1px solid #F1F5F9;">'
+        +'<textarea id="ne'+i+'" style="width:100%;min-height:72px;border:1.5px solid #6366F1;'
+        +'border-radius:8px;padding:8px 12px;font-size:.83rem;font-family:inherit;'
+        +'resize:vertical;box-sizing:border-box;outline:none;line-height:1.5;">'
+        +_esc(n.text)+'</textarea>'
+        +'<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px;">'
+        +'<button onclick="notaCancelar('+i+')" '
+        +'style="background:#F1F5F9;border:1px solid #CBD5E1;border-radius:6px;'
+        +'padding:5px 14px;cursor:pointer;font-size:.8rem;color:#475569;">'
+        +'Cancelar</button>'
+        +'<button onclick="notaActualizar('+i+')" '
+        +'style="background:#1B2D4F;color:white;border:none;border-radius:6px;'
+        +'padding:5px 18px;cursor:pointer;font-size:.8rem;font-weight:700;">'
+        +'Guardar cambios</button>'
+        +'</div></div>';
+    }
+    return '<div style="padding:14px 20px;border-bottom:1px solid #F1F5F9;'
+      +'display:flex;gap:14px;align-items:flex-start;">'
+      +'<div style="flex:1;min-width:0;">'
+      +'<div style="font-size:.73rem;color:#94A3B8;margin-bottom:4px;">\u2022 '+_esc(n.ts)+'</div>'
+      +'<div style="font-size:.85rem;color:#1E293B;white-space:pre-wrap;line-height:1.6;">'
+      +_esc(n.text)+'</div></div>'
+      +'<div style="display:flex;gap:6px;flex-shrink:0;padding-top:2px;">'
+      +'<button onclick="notaEditar('+i+')" '
+      +'style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:6px;'
+      +'padding:4px 12px;cursor:pointer;font-size:.78rem;color:#1D4ED8;font-weight:600;">'
+      +'Editar</button>'
+      +'<button onclick="notaEliminar('+i+')" '
+      +'style="background:#FEF2F2;border:1px solid #FECACA;border-radius:6px;'
+      +'padding:4px 12px;cursor:pointer;font-size:.78rem;color:#DC2626;font-weight:600;">'
+      +'Eliminar</button></div></div>';
+  }).join("");
+}
+window.notaGuardar=function(){
+  var t=document.getElementById("nota-input").value.trim();
+  if(!t)return;
+  var d=_load();
+  d.unshift({text:t,ts:_ts(),editing:false});
+  _save(d);
+  document.getElementById("nota-input").value="";
+  _render();
+};
+window.notaEditar=function(i){
+  var d=_load();
+  d.forEach(function(n,j){n.editing=(j===i);});
+  _save(d);_render();
+  setTimeout(function(){
+    var el=document.getElementById("ne"+i);
+    if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length);}
+  },30);
+};
+window.notaActualizar=function(i){
+  var el=document.getElementById("ne"+i);
+  if(!el)return;
+  var t=el.value.trim();
+  if(!t)return;
+  var d=_load();
+  d[i].text=t;d[i].editing=false;
+  _save(d);_render();
+};
+window.notaCancelar=function(i){
+  var d=_load();
+  d[i].editing=false;
+  _save(d);_render();
+};
+window.notaEliminar=function(i){
+  if(!confirm("\u00bfEliminar esta nota?"))return;
+  var d=_load();
+  d.splice(i,1);
+  _save(d);_render();
+};
+_render();
+})();
+</script>
+
 </section>
 
 </div>
