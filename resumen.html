@@ -438,7 +438,7 @@ footer {
     <h1>Resumen del proyecto &amp; Pr&oacute;ximos pasos</h1>
     <p>Estado actual y acciones pendientes para activar la integraci&oacute;n</p>
     <div class="hero-meta">
-      <span class="hero-chip">Actualizado: <strong>11/06/2026 09:43</strong></span>
+      <span class="hero-chip">Actualizado: <strong>11/06/2026 09:46</strong></span>
       <span class="hero-chip">PostgreSQL <strong>actiu_co</strong></span>
     </div>
   </div>
@@ -455,106 +455,6 @@ footer {
 <h2 class="section-title">Pr&oacute;ximos pasos para activar la integraci&oacute;n</h2>
 <p class="section-sub">El paso 0 es el &uacute;nico prerequisito t&eacute;cnico bloqueante. Los pasos 1&ndash;3 pueden hacerse en paralelo una vez el servidor est&eacute; listo.</p>
 <ol class="steps-grid" style="list-style:none"><li class="step-item"><div class="step-num" style="background:#B91C1C">0</div><div><span style="display:inline-block;background:#B91C1C22;color:#B91C1C;border:1px solid #B91C1C44;border-radius:4px;padding:1px 8px;font-size:.65rem;font-weight:700;margin-bottom:5px;">PREREQUISITO TÉCNICO</span><div class="step-title">Instalar PostgreSQL en el servidor N8N</div><div class="step-desc">La BD actiu_co debe residir en el servidor donde corre N8N. Actualmente solo escucha en localhost del portátil. Sin esto los workflows no pueden conectar a la BD.</div></div></li><li class="step-item"><div class="step-num" style="background:#92400E">1</div><div><span style="display:inline-block;background:#92400E22;color:#92400E;border:1px solid #92400E44;border-radius:4px;padding:1px 8px;font-size:.65rem;font-weight:700;margin-bottom:5px;">Solo configuración</span><div class="step-title">Configurar webhooks Tookane → N8N</div><div class="step-desc">Registrar URL del endpoint N8N en el panel Tookane. La funcionalidad ya está disponible — es solo configuración.</div></div></li><li class="step-item"><div class="step-num" style="background:#92400E">2</div><div><span style="display:inline-block;background:#92400E22;color:#92400E;border:1px solid #92400E44;border-radius:4px;padding:1px 8px;font-size:.65rem;font-weight:700;margin-bottom:5px;">Primer workflow</span><div class="step-title">Activar W2 — Tookane → PostgreSQL</div><div class="step-desc">Una vez activo el webhook, W2 guarda cada cambio de estado de Tookane en PostgreSQL en menos de 1 minuto.</div></div></li><li class="step-item"><div class="step-num" style="background:#C96C1E">3</div><div><span style="display:inline-block;background:#C96C1E22;color:#C96C1E;border:1px solid #C96C1E44;border-radius:4px;padding:1px 8px;font-size:.65rem;font-weight:700;margin-bottom:5px;">Workflow horario</span><div class="step-title">Desplegar W3 — Google Sheets automático</div><div class="step-desc">W3 sincroniza datos de PostgreSQL al Google Sheets CO cada hora (07:00-23:00). Elimina la descarga manual de CSV.</div></div></li><li class="step-item"><div class="step-num" style="background:#6B21A8">4</div><div><span style="display:inline-block;background:#6B21A822;color:#6B21A8;border:1px solid #6B21A844;border-radius:4px;padding:1px 8px;font-size:.65rem;font-weight:700;margin-bottom:5px;">Requiere IT</span><div class="step-title">Exponer SAP OData VTTK — con IT</div><div class="step-desc">Solicitar a Quiles/Tino acceso al servicio OData SAP S/4 para que W1 lea expediciones VTTK en tiempo real.</div></div></li><li class="step-item"><div class="step-num" style="background:#6B21A8">5</div><div><span style="display:inline-block;background:#6B21A822;color:#6B21A8;border:1px solid #6B21A844;border-radius:4px;padding:1px 8px;font-size:.65rem;font-weight:700;margin-bottom:5px;">Requiere IT</span><div class="step-title">Exponer SAP OData VBAK — pedido + cliente</div><div class="step-desc">Además de VTTK, acceder a VBAK para enriquecer envíos con número de pedido, cliente e importe declarado (0% → 100%).</div></div></li><li class="step-item"><div class="step-num" style="background:#6B21A8">6</div><div><span style="display:inline-block;background:#6B21A822;color:#6B21A8;border:1px solid #6B21A844;border-radius:4px;padding:1px 8px;font-size:.65rem;font-weight:700;margin-bottom:5px;">Integración principal</span><div class="step-title">Activar W1 — SAP → PostgreSQL → Tookane</div><div class="step-desc">Con OData disponible, W1 crea y actualiza envíos en Tookane con los 26 campos correctamente mapeados (sin EXTRAINFO).</div></div></li><li class="step-item"><div class="step-num" style="background:#C96C1E">7</div><div><span style="display:inline-block;background:#C96C1E22;color:#C96C1E;border:1px solid #C96C1E44;border-radius:4px;padding:1px 8px;font-size:.65rem;font-weight:700;margin-bottom:5px;">Alertas automáticas</span><div class="step-title">Activar W4 y W5 — alertas ETA e incidencias</div><div class="step-desc">W4 envía resumen de ETAs vencidas cada mañana a las 07:00. W5 crea casos CO automáticamente cuando Tookane detecta incidencias.</div></div></li><li class="step-item"><div class="step-num" style="background:#C96C1E">8</div><div><span style="display:inline-block;background:#C96C1E22;color:#C96C1E;border:1px solid #C96C1E44;border-radius:4px;padding:1px 8px;font-size:.65rem;font-weight:700;margin-bottom:5px;">Requiere credenciales</span><div class="step-title">Desplegar W6 — CO Email Agent + Asignación IA</div><div class="step-desc">Importar W6, W6a y W6b en N8N. Configurar OAuth2 Gmail CO y API Key Gemini (gemini-2.0-flash). Actualizar IDs de sub-workflows.</div></div></li><li class="step-item"><div class="step-num" style="background:#6B7280">9</div><div><span style="display:inline-block;background:#6B728022;color:#6B7280;border:1px solid #6B728044;border-radius:4px;padding:1px 8px;font-size:.65rem;font-weight:700;margin-bottom:5px;">Requiere credenciales</span><div class="step-title">Activar W7 — Google Calendar → Disponibilidad</div><div class="step-desc">OAuth2 Google Calendar para leer la agenda de técnicos CO y actualizar disponibilidad_tecnicos cada día a las 06:30.</div></div></li></ol>
-</section>
-<section id="notas-pagina" style="margin-top:48px;">
-<h2 class="section-title">Notas y propuestas</h2>
-<p class="section-sub">Escribe aqu&iacute; cualquier propuesta, correcci&oacute;n o comentario. Las notas se guardan en este navegador y aparecen cada vez que vuelvas a la p&aacute;gina.</p>
-<div style="background:white;border:1.5px solid #E2E8F0;border-radius:12px;overflow:hidden;"><div id="notas-lista"></div><div style="padding:16px 20px;border-top:1px solid #F1F5F9;"><textarea id="nota-input" rows="3" placeholder="Escribe una propuesta o corrección…" style="width:100%;border:1.5px solid #E2E8F0;border-radius:8px;padding:10px 14px;font-size:.85rem;font-family:inherit;color:#1E293B;resize:vertical;box-sizing:border-box;outline:none;line-height:1.5;transition:border-color .15s;" onfocus="this.style.borderColor='#6366F1'" onblur="this.style.borderColor='#E2E8F0'"></textarea><div style="display:flex;justify-content:flex-end;margin-top:8px;"><button onclick="notaGuardar()" style="background:#1B2D4F;color:white;border:none;border-radius:8px;padding:8px 22px;font-size:.83rem;font-weight:700;cursor:pointer;transition:opacity .15s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">&#43;&nbsp;Guardar nota</button></div></div></div><script>
-(function(){
-var _KEY='co_notes_'+window.location.pathname;
-function _load(){try{return JSON.parse(localStorage.getItem(_KEY)||"[]");}catch(e){return[];}}
-function _save(d){try{localStorage.setItem(_KEY,JSON.stringify(d));}catch(e){}}
-function _ts(){
-  var n=new Date();
-  return n.toLocaleDateString("es-ES",{day:"2-digit",month:"2-digit",year:"numeric"})  +" "+n.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"});
-}
-function _esc(s){
-  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-}
-function _render(){
-  var d=_load();
-  var el=document.getElementById("notas-lista");
-  if(!d.length){
-    el.innerHTML='<div style="padding:16px 20px;font-size:.83rem;color:#94A3B8;font-style:italic;">Sin notas todav\u00eda. S\u00e9 el primero en escribir una.</div>';
-    return;
-  }
-  el.innerHTML=d.map(function(n,i){
-    if(n.editing){
-      return '<div style="padding:14px 20px;border-bottom:1px solid #F1F5F9;">'
-        +'<textarea id="ne'+i+'" style="width:100%;min-height:72px;border:1.5px solid #6366F1;'
-        +'border-radius:8px;padding:8px 12px;font-size:.83rem;font-family:inherit;'
-        +'resize:vertical;box-sizing:border-box;outline:none;line-height:1.5;">'
-        +_esc(n.text)+'</textarea>'
-        +'<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px;">'
-        +'<button onclick="notaCancelar('+i+')" '
-        +'style="background:#F1F5F9;border:1px solid #CBD5E1;border-radius:6px;'
-        +'padding:5px 14px;cursor:pointer;font-size:.8rem;color:#475569;">'
-        +'Cancelar</button>'
-        +'<button onclick="notaActualizar('+i+')" '
-        +'style="background:#1B2D4F;color:white;border:none;border-radius:6px;'
-        +'padding:5px 18px;cursor:pointer;font-size:.8rem;font-weight:700;">'
-        +'Guardar cambios</button>'
-        +'</div></div>';
-    }
-    return '<div style="padding:14px 20px;border-bottom:1px solid #F1F5F9;'
-      +'display:flex;gap:14px;align-items:flex-start;">'
-      +'<div style="flex:1;min-width:0;">'
-      +'<div style="font-size:.73rem;color:#94A3B8;margin-bottom:4px;">\u2022 '+_esc(n.ts)+'</div>'
-      +'<div style="font-size:.85rem;color:#1E293B;white-space:pre-wrap;line-height:1.6;">'
-      +_esc(n.text)+'</div></div>'
-      +'<div style="display:flex;gap:6px;flex-shrink:0;padding-top:2px;">'
-      +'<button onclick="notaEditar('+i+')" '
-      +'style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:6px;'
-      +'padding:4px 12px;cursor:pointer;font-size:.78rem;color:#1D4ED8;font-weight:600;">'
-      +'Editar</button>'
-      +'<button onclick="notaEliminar('+i+')" '
-      +'style="background:#FEF2F2;border:1px solid #FECACA;border-radius:6px;'
-      +'padding:4px 12px;cursor:pointer;font-size:.78rem;color:#DC2626;font-weight:600;">'
-      +'Eliminar</button></div></div>';
-  }).join("");
-}
-window.notaGuardar=function(){
-  var t=document.getElementById("nota-input").value.trim();
-  if(!t)return;
-  var d=_load();
-  d.unshift({text:t,ts:_ts(),editing:false});
-  _save(d);
-  document.getElementById("nota-input").value="";
-  _render();
-};
-window.notaEditar=function(i){
-  var d=_load();
-  d.forEach(function(n,j){n.editing=(j===i);});
-  _save(d);_render();
-  setTimeout(function(){
-    var el=document.getElementById("ne"+i);
-    if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length);}
-  },30);
-};
-window.notaActualizar=function(i){
-  var el=document.getElementById("ne"+i);
-  if(!el)return;
-  var t=el.value.trim();
-  if(!t)return;
-  var d=_load();
-  d[i].text=t;d[i].editing=false;
-  _save(d);_render();
-};
-window.notaCancelar=function(i){
-  var d=_load();
-  d[i].editing=false;
-  _save(d);_render();
-};
-window.notaEliminar=function(i){
-  if(!confirm("\u00bfEliminar esta nota?"))return;
-  var d=_load();
-  d.splice(i,1);
-  _save(d);_render();
-};
-_render();
-})();
-</script>
-
 </section>
 
 </div>
