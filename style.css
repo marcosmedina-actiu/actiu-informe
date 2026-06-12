@@ -140,18 +140,22 @@ p.section-sub { color: var(--text2); font-size: .83rem; margin-bottom: 22px; }
 .kpi-card:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
 .kpi-card .kpi-value {
   font-size: 2.2rem; font-weight: 900;
-  color: var(--black); line-height: 1; letter-spacing: -.03em;
+  color: var(--brand); line-height: 1; letter-spacing: -.03em;
 }
 .kpi-card .kpi-label {
   font-size: .65rem; color: var(--gray3);
   font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
   margin-top: 5px;
 }
-.kpi-card .kpi-sub { font-size: .71rem; color: var(--teal); margin-top: 4px; font-weight: 500; line-height: 1.3; }
+.kpi-card .kpi-sub { font-size: .71rem; color: var(--gray3); margin-top: 4px; font-weight: 500; line-height: 1.3; }
 
 /* KPI operativo con color de fondo */
 .kpi-card.alert  { border-top-color: var(--brand); background: #FEF7F8; }
 .kpi-card.ok     { border-top-color: var(--teal);  background: #F0FDFA; }
+.kpi-card.ok     .kpi-value { color: var(--teal); }
+.kpi-card.alert  .kpi-value { color: var(--brand); }
+.kpi-card.ok     .kpi-sub   { color: var(--teal); }
+.kpi-card.alert  .kpi-sub   { color: var(--brand-dk); }
 
 /* ── BADGES ──────────────────────────────────────────────────────── */
 .badge { display: inline-block; border-radius: 4px; padding: 2px 7px; font-size: .67rem; font-weight: 700; white-space: nowrap; letter-spacing: .02em; }
@@ -469,6 +473,37 @@ footer {
 .cov-fill  { height: 7px; border-radius: 4px; }
 .cov-pct   { min-width: 42px; font-size: .77rem; font-weight: 700; text-align: right; }
 .cov-nota  { font-size: .68rem; color: var(--gray3); }
+
+/* ── UTILITY COMPONENTS ──────────────────────────────────────────── */
+/* Info callout boxes */
+.info-box { border-radius: var(--radius); padding: 14px 20px; }
+.info-box-blue  { background: #EFF6FF; border: 1.5px solid #BFDBFE; }
+.info-box-green { background: #F0FDF4; border: 1.5px solid #86EFAC; }
+.info-box-amber { background: #FEF3C7; border: 1px solid #FDE68A; }
+.info-box .ib-tag { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; }
+.info-box-blue  .ib-tag { color: #1D4ED8; }
+.info-box-green .ib-tag { color: #15803D; }
+.info-box-amber .ib-tag { color: #B45309; }
+
+/* Standard bordered card */
+.card-std { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+
+/* Dark card / table header */
+.dark-hdr { background: #1B2D4F; color: white; padding: 10px 16px; }
+.dark-hdr strong { font-size: .9rem; font-weight: 800; }
+
+/* Left-border card */
+.lft-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; background: white; }
+
+/* Section sub-heading h3 */
+.sec-h3 { font-size: .95rem; font-weight: 800; color: #1B2D4F; margin: 20px 0 8px; }
+
+/* Vertical card stack */
+.cards-col { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+
+/* Workflow legend */
+.wf-legend { display: flex; gap: 18px; margin-top: 14px; font-size: .73rem; color: var(--text2); flex-wrap: wrap; }
+.wf-legend-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
 
 /* ── RESPONSIVE ──────────────────────────────────────────────────── */
 @media (max-width: 640px) {
