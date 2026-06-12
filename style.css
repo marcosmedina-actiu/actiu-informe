@@ -42,16 +42,16 @@ body {
 /* ── NAV ─────────────────────────────────────────────────────────── */
 nav {
   position: sticky; top: 0; z-index: 200;
-  background: var(--black);
+  background: var(--brand);
   padding: 0 32px;
   display: flex; align-items: stretch; gap: 0;
   flex-wrap: wrap;
-  border-bottom: 2px solid var(--brand);
+  border-bottom: 2px solid var(--brand-dk);
 }
 .nav-brand {
   display: flex; align-items: center; gap: 10px;
   padding: 13px 20px 13px 0; margin-right: 6px;
-  border-right: 1px solid rgba(255,255,255,.1);
+  border-right: 1px solid rgba(255,255,255,.25);
   white-space: nowrap;
   text-decoration: none;
 }
@@ -59,7 +59,7 @@ nav {
   color: white; font-weight: 800; font-size: .88rem; letter-spacing: .02em;
 }
 nav a.nav-link {
-  color: rgba(255,255,255,.45);
+  color: rgba(255,255,255,.75);
   text-decoration: none;
   padding: 0 14px;
   font-size: .77rem; font-weight: 600;
@@ -70,8 +70,8 @@ nav a.nav-link {
   margin-bottom: -2px;
   letter-spacing: .01em;
 }
-nav a.nav-link:hover  { color: white; background: rgba(255,255,255,.05); border-bottom-color: var(--brand); }
-nav a.nav-link.active { color: white; border-bottom-color: var(--brand); }
+nav a.nav-link:hover  { color: white; background: rgba(0,0,0,.1); border-bottom-color: white; }
+nav a.nav-link.active { color: white; border-bottom-color: white; }
 
 /* ── HERO — blanco Actiu ─────────────────────────────────────────── */
 .hero {
@@ -400,8 +400,8 @@ table.data-table code {
 
 /* ── FOOTER ──────────────────────────────────────────────────────── */
 footer {
-  background: var(--black); border-top: 2px solid var(--brand);
-  color: rgba(255,255,255,.3); text-align: center;
+  background: var(--brand); border-top: 2px solid var(--brand-dk);
+  color: rgba(255,255,255,.8); text-align: center;
   padding: 16px; font-size: .73rem; letter-spacing: .02em;
 }
 
